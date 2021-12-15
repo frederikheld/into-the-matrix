@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Enter the Matrix</title>
+
+    <script src="../dist/bundle.js"></script>
+    <!-- <link rel="stylesheet" href="../dist/bundle.css" /> -->
+
+    <body>
+        <div id="container"></div>
+    </body>
+
+    <script>
+        // const animate = false
+        const animate = true
+
+        // const debug = false
+        const debug = true
+
+        window.addEventListener('load', () => {
+            const container = document.getElementById('container')
+
+            const mc = new MatrixCurtain(50, debug)
+
+            if (animate) {
+                mc.run(container, 400)
+            } else {
+                container.innerHTML = mc.render()
+            }
+        })
+    </script>
+</head>
+</html>

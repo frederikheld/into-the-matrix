@@ -1,0 +1,22 @@
+{
+  "name": "matrix-curtain",
+  "version": "0.0.1",
+  "description": "Matrix effect as overlay for websites",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack --watch",
+    "build": "webpack"
+  },
+  "author": "Frederik S. Held (kontakt@frederikheld.de)",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "devDependencies": {
+    "css-loader": "^6.5.1",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.65.0",
+    "webpack-cli": "^4.9.1"
+  }
+}
