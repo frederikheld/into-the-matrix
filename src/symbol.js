@@ -4,9 +4,10 @@ class Symbol {
 
     symbols = ['ﾊ', 'ﾐ', 'ﾋ', 'ｰ', 'ｳ', 'ｼ', 'ﾅ', 'ﾓ', 'ﾆ', 'ｻ', 'ﾜ', 'ﾂ', 'ｵ', 'ﾘ', 'ｱ', 'ﾎ', 'ﾃ', 'ﾏ', 'ｹ', 'ﾒ', 'ｴ', 'ｶ', 'ｷ', 'ﾑ', 'ﾕ', 'ﾗ', 'ｾ', 'ﾈ', 'ｽ', 'ﾀ', 'ﾇ', 'ﾍ']
 
-    constructor (parentEl, options = undefined) {
+    constructor (parentEl, options = undefined, debug = false) {
         this.parentEl = parentEl
         this.options = options
+        this.debug = debug
         
         this.el = this.getElement()
         this.parentEl.append(this.el)

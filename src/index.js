@@ -5,12 +5,13 @@ import Strand from './strand'
 
 class Matrix {
 
-    newStrandProbability = 0.2 // probability per column
-
-    constructor (parentEl, columns, debug) {
+    constructor (parentEl, newStrandProbability = 0.1, debug = false) {
         this.parentEl = parentEl
-        this.columns = columns
         this.debug = debug
+
+        this.newStrandProbability = newStrandProbability // probability per column per render cycle
+
+        this.columns = Math.floor(parseInt(getComputedStyle(parentEl).width) / 16) + 1
 
         // Stores references to child elements that will be
         // created/deleted dynamically in each render step:
@@ -22,6 +23,9 @@ class Matrix {
         // will store a reference to the timer created in run()
         // to be able to stop this timer in stop():
         this.renderTimer
+
+        // time in millis needed to render the whole matrix:
+        this.renderTime
     }
 
     /**
@@ -41,6 +45,8 @@ class Matrix {
      * update the presentation of the "Matrix" dom element.
      */
     render () {
+        const renderStartTime = new Date().getTime()
+
         // delete all strands that are out of bounds:
         this.strands = this.strands.filter((strand) => {
             const parentHeight = this.el.clientHeight
@@ -63,10 +69,12 @@ class Matrix {
             }
         }
 
-        // render all strands
+        // render all strands:
         this.strands.map ((strand) => {
             strand.render()
         })
+
+        this.renderTime = new Date().getTime() - renderStartTime
     }
 
     /**
@@ -90,13 +98,7 @@ class Matrix {
     }
 
     updateStats (statsEl) {
-        statsEl.innerHTML = `
-<table>
-  <tbody>
-    <tr><td># of strands:</td><td>${this.strands.length}</td></tr>
-  </tbody>
-</table>
-`
+        statsEl.innerHTML = `# of cols: ${this.columns} | # of strands: ${this.strands.length} | render time: ${this.renderTime} ms`
     }
 }
 

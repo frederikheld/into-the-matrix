@@ -9,7 +9,7 @@ class Strand {
 
     currentPosition = 0 // on the way down
 
-    constructor (parentEl, column, debug) {
+    constructor (parentEl, column, debug = false) {
         this.parentEl = parentEl
         this.column = column
         this.debug = debug
@@ -44,7 +44,7 @@ class Strand {
                 options.style = { 'color': '#fff', 'font-weight': 'bold' }
             }
 
-            this.symbols[i] = new Symbol(el, options)
+            this.symbols[i] = new Symbol(el, options, this.debug)
         }
 
         return el
