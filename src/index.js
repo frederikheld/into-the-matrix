@@ -1,58 +1,85 @@
 'use strict'
 
-import css from "./index.css"
-import Strand from "./strand"
+import css from './index.css'
+import Strand from '../src/strand'
 
-class MatrixCurtain {
+class Matrix {
 
     newStrandProbability = 0.2 // probability per column
 
-    constructor (columns, debug = false) {
-
+    constructor (parentEl, columns, debug) {
+        this.parentEl = parentEl
         this.columns = columns
         this.debug = debug
+        
+        this.el = this.createElement()
+        this.parentEl.append(this.el)
 
+        // Stores references to child elements that will be
+        // created (and some deleted) in each render step:
         this.strands = []
+
+        // will store a reference to the timer created in run()
+        // to be able to stop this timer in stop():
+        this.renderTimer
     }
 
-    run (el, cadence = 800) {
-        const containerArea = el.getBoundingClientRect()
-        console.log(containerArea)
+    /**
+     * Creates and returns the "Matrix" dom element.
+     * 
+     * @returns dom element
+     */
+    createElement() {
+        const el = document.createElement('div')
+        el.classList.add('matrix')
+
+        // el.innerHTML = 'Hello World!'
+
+        return el
+    }
+
+    /**
+     * Call the render() function in each iteration to
+     * update the presentation of the "Matrix" dom element.
+     */
+    render () {
+        // delete all strands that are out of bounds:
+        // tbd
+
+        // randomly add new strands in each column:
+        for (let i = 0; i < this.columns; i++) {
+            if (Math.random() < this.newStrandProbability) {
+                const newStrand = new Strand(this.el, i, this.debug)
+                this.strands.push(newStrand)
+                console.log('created new strand', newStrand)
+            }
+        }
+
+        // render all strands
+        this.strands.map ((strand) => {
+            strand.render()
+        })
+    }
+
+    /**
+     * Automatically runs the render function periodically.
+     */
+    run (cadence = 1000) {
         this.renderTimer = setInterval(() => {
-            el.innerHTML = this.render()
+            this.render()
         }, cadence)
     }
 
+    /**
+     * Stops the automatic rendering. It can be continued with run().
+     */
     stop () {
         clearInterval(this.renderTimer)
     }
 
-    render () {
-
-        // delete strands that are out of the visible area:
-        this.strands.filter(strand => { console.log(strand.style.visibility); return true })
-
-        // create new strands:
-        for (let i = 0; i < this.columns; i++) {
-            if (Math.random() < this.newStrandProbability) {
-                this._addNewStrand(i) 
-            }
-        }
-
-        // log:
-        this._logDebug()
-
-        // render strands in curtain container:
-        return '<div class="curtain">' + this.strands.map(strand => strand.render()).join('') + '</div>'
-    }
-
-    _addNewStrand (column) {
-        this.strands.push(new Strand(column, this.debug))
-    }
-
-    _logDebug () {
-        console.log('number of strands:', this.strands.length)
+    getNumberOfStrands () {
+        return this.strands.length
     }
 }
 
-export default MatrixCurtain
+export default Matrix
