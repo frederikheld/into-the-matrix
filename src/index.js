@@ -33,8 +33,6 @@ class Matrix {
         const el = document.createElement('div')
         el.classList.add('matrix')
 
-        // el.innerHTML = 'Hello World!'
-
         return el
     }
 
@@ -44,14 +42,23 @@ class Matrix {
      */
     render () {
         // delete all strands that are out of bounds:
-        // tbd
+        this.strands = this.strands.filter((strand) => {
+            const parentHeight = this.el.clientHeight
+
+            const marginTop = parseInt(getComputedStyle(strand.el).marginTop)
+            
+            if (Math.abs(marginTop) > parentHeight) {
+                return false
+            }
+
+            return true
+        })
 
         // randomly add new strands in each column:
         for (let i = 0; i < this.columns; i++) {
             if (Math.random() < this.newStrandProbability) {
                 const newStrand = new Strand(this.el, i, this.debug)
                 this.strands.push(newStrand)
-                console.log('created new strand', newStrand)
             }
         }
 
@@ -64,9 +71,13 @@ class Matrix {
     /**
      * Automatically runs the render function periodically.
      */
-    run (cadence = 1000) {
+    run (cadence = 1000, statsEl = undefined) {
         this.renderTimer = setInterval(() => {
             this.render()
+
+            if (statsEl) {
+                this.updateStats(statsEl)
+            }
         }, cadence)
     }
 
@@ -77,8 +88,14 @@ class Matrix {
         clearInterval(this.renderTimer)
     }
 
-    getNumberOfStrands () {
-        return this.strands.length
+    updateStats (statsEl) {
+        statsEl.innerHTML = `
+<table>
+  <tbody>
+    <tr><td># of strands:</td><td>${this.strands.length}</td></tr>
+  </tbody>
+</table>
+`
     }
 }
 

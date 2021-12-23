@@ -36,6 +36,7 @@ class Strand {
     render () {
         this.currentPosition += 1
         this.el.style.marginTop = this.currentPosition + 'em'
+        this.el.innerHTML = parseInt(getComputedStyle(this.el).marginTop)
     }
 }
 

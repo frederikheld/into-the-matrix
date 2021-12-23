@@ -9,18 +9,19 @@
 
     <body>
         <div id="container"></div>
-        <div id="stats">
-            <div id="number-of-strands"></div>
-        </div>
-        <div id="controls">
-            <button id="button-stop">Stop</button>
-            <button id="button-start">Start</button>
+        <div id="footer">
+            <div id="stats"></div>
+            <div id="controls">
+                <button id="button-stop">Stop</button>
+                <button id="button-start">Start</button>
+            </div>
         </div>
     </body>
 
     <script>
         // const animate = false
         const animate = true
+        const cadence = 400
 
         // const debug = false
         const debug = true
@@ -30,26 +31,21 @@
 
         window.addEventListener('load', () => {
 
-            console.log('Window loaded')
-
             if (animate) {
-                mc.run(container, 1000)
+                mc.run(cadence, document.getElementById('stats'))
             } else {
                 mc.render()
             }
 
             // console.log('container:', mc.getElement().getBoundingClientRect())
-            console.log('container:', container)
         })
 
         document.getElementById('button-start').addEventListener('click', () => {
-            mc.run(container, 400)
+            mc.run(cadence, document.getElementById('stats'))
         })
 
         document.getElementById('button-stop').addEventListener('click', () => {
             mc.stop()
-            const el = document.getElementById('number-of-strands')
-            el.innerText = mc.getNumberOfStrands()
         })
     </script>
 </head>
