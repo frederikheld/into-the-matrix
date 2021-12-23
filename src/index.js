@@ -1,7 +1,7 @@
 'use strict'
 
 import css from './index.css'
-import Strand from '../src/strand'
+import Strand from './strand'
 
 class Matrix {
 
@@ -11,13 +11,13 @@ class Matrix {
         this.parentEl = parentEl
         this.columns = columns
         this.debug = debug
+
+        // Stores references to child elements that will be
+        // created/deleted dynamically in each render step:
+        this.strands = []
         
         this.el = this.createElement()
         this.parentEl.append(this.el)
-
-        // Stores references to child elements that will be
-        // created (and some deleted) in each render step:
-        this.strands = []
 
         // will store a reference to the timer created in run()
         // to be able to stop this timer in stop():
@@ -47,8 +47,9 @@ class Matrix {
 
             const marginTop = parseInt(getComputedStyle(strand.el).marginTop)
             
-            if (Math.abs(marginTop) > parentHeight) {
-                return false
+            if (marginTop > parentHeight) {
+                strand.el.remove() // remove element from DOM
+                return false // remove object from references list
             }
 
             return true

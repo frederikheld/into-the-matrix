@@ -30,14 +30,11 @@
         const mc = new Matrix(container, 20, debug)
 
         window.addEventListener('load', () => {
-
             if (animate) {
                 mc.run(cadence, document.getElementById('stats'))
             } else {
                 mc.render()
             }
-
-            // console.log('container:', mc.getElement().getBoundingClientRect())
         })
 
         document.getElementById('button-start').addEventListener('click', () => {
