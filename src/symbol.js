@@ -8,8 +8,9 @@ class Symbol {
         '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
     ]
 
-    constructor (parentEl, options = undefined, debug = false) {
+    constructor (parentEl, changeSymbolProbability, options = undefined, debug = false) {
         this.parentEl = parentEl
+        this.changeSymbolProbability = changeSymbolProbability
         this.options = options
         this.debug = debug
         
@@ -40,7 +41,9 @@ class Symbol {
         if (this.options?.text) {
             this.el.innerText = this.options.text
         } else {
-            this.el.innerText = this.symbols[Math.floor(Math.random() * (this.symbols.length - 1))]
+            if (Math.random() < this.changeSymbolProbability) {
+                this.el.innerText = this.symbols[Math.floor(Math.random() * (this.symbols.length - 1))]
+            }
         }
     }
 }

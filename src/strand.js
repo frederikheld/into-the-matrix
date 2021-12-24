@@ -38,13 +38,18 @@ class Strand {
         // according to `this.length`:
         for (let i = 0; i < this.length; i++) {
             const options = { }
+            let changeSymbolProbability
             if (i < this.length - 1) {
+                // all other elements in strand:
                 options.style = { 'opacity': i * 0.1 }
+                changeSymbolProbability = 0.2
             } else {
+                // leading element in strand:
                 options.style = { 'color': '#fff', 'font-weight': 'bold' }
+                changeSymbolProbability = 1.0
             }
 
-            this.symbols[i] = new Symbol(el, options, this.debug)
+            this.symbols[i] = new Symbol(el, changeSymbolProbability, options, this.debug)
         }
 
         return el
