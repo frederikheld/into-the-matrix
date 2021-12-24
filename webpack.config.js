@@ -7,7 +7,7 @@ module.exports = {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist'),
         libraryTarget: 'var',
-        library: 'IntoTheMatrix',
+        library: 'Matrix',
         libraryExport: 'default'
     },
     optimization: {
