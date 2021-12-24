@@ -5,11 +5,12 @@ import Strand from './strand'
 
 class Matrix {
 
-    constructor (parentEl, newStrandProbability = 0.1, debug = false) {
+    constructor (parentEl, options) {
         this.parentEl = parentEl
-        this.debug = debug
 
-        this.newStrandProbability = newStrandProbability // probability per column per render cycle
+        this.options = options
+        
+        this.newStrandProbability = options.newStrandProbability || 0.1 // probability per column per render cycle
 
         this.columns = Math.floor(parseInt(getComputedStyle(parentEl).width) / 16) + 1
 
@@ -64,7 +65,7 @@ class Matrix {
         // randomly add new strands in each column:
         for (let i = 0; i < this.columns; i++) {
             if (Math.random() < this.newStrandProbability) {
-                const newStrand = new Strand(this.el, i, this.debug)
+                const newStrand = new Strand(this.el, i, this.options.debug)
                 this.strands.push(newStrand)
             }
         }

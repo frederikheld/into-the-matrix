@@ -19,11 +19,16 @@
     </body>
 
     <script>
-        const cadence = 300
-        const debug = true
+        const cadence = 200
+        
+        const options = {
+            newStrandProbability: 0.1,
+            fontSize: 16,
+            debug: false
+        }
 
         const container = document.getElementById('container')
-        const mc = new Matrix(container, 0.1, debug)
+        const mc = new Matrix(container, options)
 
         window.addEventListener('load', () => {
             mc.run(cadence, document.getElementById('stats'))
