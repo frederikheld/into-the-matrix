@@ -5,10 +5,10 @@
     <title>Enter the Matrix</title>
 
     <script src="../dist/bundle.js"></script>
-    <!-- <link rel="stylesheet" href="../dist/bundle.css" /> -->
 
     <body>
         <div id="container"></div>
+
         <div id="footer">
             <div id="stats"></div>
             <div id="controls">
@@ -19,22 +19,14 @@
     </body>
 
     <script>
-        // const animate = false
-        const animate = true
         const cadence = 300
-
-        // const debug = false
         const debug = true
 
         const container = document.getElementById('container')
         const mc = new Matrix(container, 0.1, debug)
 
         window.addEventListener('load', () => {
-            if (animate) {
-                mc.run(cadence, document.getElementById('stats'))
-            } else {
-                mc.render()
-            }
+            mc.run(cadence, document.getElementById('stats'))
         })
 
         document.getElementById('button-start').addEventListener('click', () => {
