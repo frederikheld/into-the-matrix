@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Bounding Rect</title>
+
+    <style type="text/css">
+        #container {
+            width: 300px;
+            height: 200px;
+            margin-left: 100px;
+            margin-top: 50px;
+            background-color: black;
+        }
+
+        #box_a {
+            width: 50px;
+            height: 50px;
+            background-color: red;
+        }
+
+        .matrix {
+            background-color: greenyellow;
+        }
+
+        .strand {
+            display: block;
+            position: relative;
+            background-color: aqua;
+        }
+
+        .symbol {
+            display: block;
+            position: relative;
+            background-color: aquamarine;
+        }
+    </style>
+
+    <body>
+        <div id="container">
+            <div id="box_a"></div>
+        </div>
+    </body>
+
+    <script>
+        const containerEl = document.getElementById('container')
+        console.log('container:', containerEl.getBoundingClientRect())
+
+        const boxAEl = document.getElementById('box_a')
+        console.log('box_a:', boxAEl.getBoundingClientRect())
+
+        // programmatically add element:
+        const newEl = document.createElement('div')
+        newEl.style.width = '100px'
+        newEl.style.height = '200px'
+        newEl.style.backgroundColor = 'green'
+
+        console.log('newEl before append:', newEl.getBoundingClientRect())
+        containerEl.appendChild(newEl)
+        console.log('newEl after append:', newEl.getBoundingClientRect())
+
+        class Matrix {
+            constructor (parentEl) {
+                this.parentEl = parentEl
+                this.el = document.createElement('div')
+                this.el.classList.add('matrix')
+
+                // this.child = new Strand(this.el)
+                this.strands = []
+            }
+
+            getElement () {
+                this.el.append(this.child.getElement())
+
+                this.parentEl.append(this.el)
+            }
+
+            render () {
+                for (let i = 0; i < this.columns; i++) {
+                    if (Math.random() < this.newStrandProbability) {
+                        this._addNewStrand(i) 
+                    }
+                }
+                this.child.render()
+                console.log('Matrix width:', this.el.getBoundingClientRect())
+            }
+
+            run (cadence = 1000) {
+                this.renderTimer = setInterval(() => {
+                    this.render()
+                }, cadence)
+            }
+
+            stop () {
+                clearInterval(this.renderTimer)
+            }
+
+            _addNewStrand () {
+                this.strands.push(new Strand(this.parentEl, column, this.debug))
+            }
+        }
+
+        class Strand {
+            min_length = 0
+            max_length = 20
+
+            constructor (parentEl) {
+                this.parentEl = parentEl
+                this.el = document.createElement('div')
+                this.el.classList.add('strand')
+
+                this.length = Math.floor((Math.random() * this.max_length) + this.min_length - 1)
+
+                this.symbols = []
+                for (let i = 0; i < this.length; i++) {
+                    this.symbols[i] = new Symbol(this.el)
+                }
+
+                this.position = -this.length // start with negative offset to have the first char start at the top
+            }
+
+            getElement () {
+                this.symbols.map((symbol) => {
+                    this.el.append(symbol.getElement())
+                })
+
+                this.parentEl.append(this.el)
+            }
+
+            render () {
+                this.position += 1
+
+                this.symbols.map((symbol) => {
+                    symbol.render()
+                })
+
+                console.log('Strand width:', this.el.getBoundingClientRect())
+            }
+        }
+
+        class Symbol {
+            symbols = ['A', 'B', 'C', 'D', 'E', 'F']
+            // symbols = ['ﾊ', 'ﾐ', 'ﾋ', 'ｰ', 'ｳ', 'ｼ', 'ﾅ', 'ﾓ', 'ﾆ', 'ｻ', 'ﾜ', 'ﾂ', 'ｵ', 'ﾘ', 'ｱ', 'ﾎ', 'ﾃ', 'ﾏ', 'ｹ', 'ﾒ', 'ｴ', 'ｶ', 'ｷ', 'ﾑ', 'ﾕ', 'ﾗ', 'ｾ', 'ﾈ', 'ｽ', 'ﾀ', 'ﾇ', 'ﾍ']
+
+            constructor (parentEl) {
+                this.parentEl = parentEl
+                this.el = document.createElement('div')
+                this.el.classList.add('symbol')
+            }
+
+            getElement () {
+                this.el.innerHTML = this.symbols[Math.floor(Math.random() * (this.symbols.length - 1))]
+                
+                this.parentEl.append(this.el)
+            }
+
+            render () {
+                console.log('Symbol width:', this.el.getBoundingClientRect())
+            }
+        }
+
+        const matrix = new Matrix(containerEl)
+        matrix.getElement()
+        matrix.render()
+        // matrix.run()
+
+        console.log(matrix)
+
+    </script>
+</head>
+</html>

@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Bounding Rect</title>
+
+    <script src="../dist/bundle.js"></script>
+
+    <style type="text/css">
+        #container {
+            width: 300px;
+            height: 200px;
+            position: relative;
+        }
+        
+    </style>
+
+    <body>
+        <div id="container"></div>
+        <div id="controls">
+            <button id="btn-next-render-step">next render step</button>
+        </div>
+    </body>
+
+    <script>
+        const containerEl = document.getElementById('container')
+
+        const symbol = Matrix.Symbol(containerEl, 1, 5, 0.1, 0.1, deleteSymbolCallback)
+
+        let references = [symbol]
+
+        /**
+         * The execution context of this callback is the instances of Symbol.
+         * This means that `this` refers to the instance of Symbol, not to the
+         * instance of Trickle!
+         */
+        function deleteSymbolCallback (symbolToDelete) {
+            console.log('deleting symbol:', symbolToDelete.id)
+
+            // remove symbol from parent element:
+            const elementToRemove = document.getElementById(symbolToDelete.id)
+            console.log('element to remove:', elementToRemove)
+            elementToRemove.remove()
+
+            // remove reference:
+            console.log('  symbols.length before:', references.length)
+            references = references.filter(s => {
+                console.log('  ', symbolToDelete.id, s)
+                return symbolToDelete.id !== s.id
+            })
+            console.log('  symbols.length after:', references.length)
+
+            // delete object:
+            // delete symbol
+        }
+
+        const btnNextRenderStep = document.getElementById('btn-next-render-step')
+        btnNextRenderStep.addEventListener('click', () => {
+            console.log('btn next render step clicked')
+
+            references.map(s => {
+                s.render()
+            })
+
+            console.log(containerEl.childNodes)
+        })
+    </script>
+</head>
+</html>

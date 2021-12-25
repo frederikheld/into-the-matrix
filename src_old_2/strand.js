@@ -9,10 +9,11 @@ class Strand {
 
     currentPosition = 0 // on the way down
 
-    constructor (parentEl, column, debug = false) {
+    constructor (parentEl, column, options) {
         this.parentEl = parentEl
         this.column = column
-        this.debug = debug
+        
+        this.options = options
 
         this.length = Math.floor((Math.random() * this.max_length) + this.min_length - 1)
         this.currentPosition = -this.length // start with negative offset to have the first char start at the top
@@ -37,7 +38,7 @@ class Strand {
         // Fill list with number of child elements
         // according to `this.length`:
         for (let i = 0; i < this.length; i++) {
-            const options = { }
+            const options = { ...this.options }
             let changeSymbolProbability
             if (i < this.length - 1) {
                 // all other elements in strand:
@@ -49,7 +50,7 @@ class Strand {
                 changeSymbolProbability = 1.0
             }
 
-            this.symbols[i] = new Symbol(el, changeSymbolProbability, options, this.debug)
+            this.symbols[i] = new Symbol(el, changeSymbolProbability, options)
         }
 
         return el
@@ -57,7 +58,7 @@ class Strand {
 
     render () {
         this.currentPosition += 1
-        this.el.style.marginTop = this.currentPosition + 'em'
+        this.el.style.marginTop = this.currentPosition * this.options.fontSize + 'px'
 
         this.symbols.map((symbol) => {
             symbol.render()
