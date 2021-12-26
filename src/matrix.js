@@ -70,31 +70,54 @@ class Matrix {
 
             //     return false
             // })
-            for (let i = 0; i < this.trickles.length; i++) {
-                if (this.trickles[i].el.children.length <= 0) {
-                    // remove element from DOM:
-                    this.trickles[i].el.remove()
-
-                    // remove object reference:
-                    this.trickles.splice(i, 1)
-                }
+            if (this.options.debug) {
+                console.log('# of columns:', this.columns)
+                console.log('# of trickles:', this.trickles.length)
             }
+            // for (let i = 0; i < this.trickles.length; i++) {
+            // }
 
             // randomly add new trickles in each column:
             for (let i = 0; i < this.columns; i++) {
                 if (Math.random() < this.options.newTrickleProbability) {
+                    if (this.options.debug) {
+                        console.log('  > adding new trickle')
+                    }
+
                     const newTrickle = new Trickle(this.el, i, this.options)
                     this.trickles.push(newTrickle)
                 }
             }
 
-            // render all trickles:
+            // process trickles:
             // this.trickles.forEach(trickle => trickle.render())
             for (let i = 0; i < this.trickles.length; i++) {
-                this.trickles[i].render()
+                // remove trickle if it has run dry:
+                if (this.trickles[i].el.children.length <= 0) {
+                    if (this.options.debug) {
+                        console.log('  > removing run dry trickle')
+                    }
+
+                    // remove element from DOM:
+                    this.trickles[i].el.remove()
+
+                    // remove object reference:
+                    this.trickles.splice(i, 1)
+                } else {
+                    if (this.options.debug) {
+                        console.log('  > rendering trickle')
+                    }
+
+                    // render trickle if it has children:
+                    this.trickles[i].render()
+                }
             }
 
             this.renderTime = new Date().getTime() - renderStartTime
+
+            if (this.options.debug) {
+                console.log('----------')
+            }
 
             resolve()
         })

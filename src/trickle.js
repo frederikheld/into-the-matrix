@@ -22,6 +22,13 @@ class Trickle {
         this.parentEl.append(this.el)
 
         this.parentElHeight = parseInt(getComputedStyle(this.parentEl).height)
+
+        /**
+         * A trickle will have one render run on creation to add a first element.
+         * This allows to do the removing and rendering in the same loop over the trickles 
+         * in `Matrix.render()`.
+         */
+        this.render()
     }
 
     createElement () {
