@@ -20,6 +20,8 @@ class Symbol {
 
         this.el = this.createElement()
         this.parentEl.append(this.el)
+
+        this.render()
     }
 
     createElement () {
@@ -43,21 +45,12 @@ class Symbol {
 
     async render () {
         return new Promise((resolve, reject) => {
-            if (this.iteration > 0) {
+            if (this.iteration > 1) {
                 this.el.classList.remove('new-symbol')
             }
 
             // Reduce opacity according to fade out speed:
             const opacity = 1.0 - (this.iteration * this.fadeOutSpeed)
-
-            // Delete element if it is faded out:
-            if (opacity <= 0.0) {
-                if (this.options.debug) {
-                    console.log('removing faded out symbol')
-                }
-                this.el.remove()
-                return
-            }
             this.el.style.opacity = opacity
 
             // Change symbol according to probability:

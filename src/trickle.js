@@ -49,7 +49,21 @@ class Trickle {
             // Render all symbols:
             // this.symbols.forEach(symbol => symbol.render())
             for (let i = 0; i < this.symbols.length; i++) {
-                this.symbols[i].render()
+
+                // Delete element if it is faded out:
+                if (this.symbols[i].el.style.opacity <= 0.0) {
+                    if (this.options.debug) {
+                        console.log('removing faded out symbol')
+                    }
+
+                    // remove element from DOM:
+                    this.symbols[i].el.remove()
+
+                    // remove object reference:
+                    this.symbols.splice(i, 1)
+                } else {
+                    this.symbols[i].render()
+                }
             }
 
             // Move to next position:
