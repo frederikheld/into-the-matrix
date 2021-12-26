@@ -12,7 +12,6 @@ class Matrix extends HTMLElement {
 
         this.parentEl = parentEl
 
-
         this.options = {
             symbolSize: options.symbolSize || 16,
             newTrickleProbability: options.newTrickleProbability || 0.1, // probability per column per render cycle,
