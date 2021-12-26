@@ -1,21 +1,21 @@
 # Into the Matrix
 
-This is an implementation of the famous Matrix effect in _JavaScript_. It is focused on reproducing the effect as it was shown in the first movie as accurate as possible.
-
-To get you started quickly, the repo comes with a demo that shows you how to embed the effect into your own website. If you just want to put this effect on your screen, the demo is all you need.
+Become the Operator with this _JavaScript_ implementation of the famous Matrix effect as it was shown in the first movie in 1999. 
 
 ![Into the Matrix](./docs/into-the-matrix.jpg)
 
+To get you started quickly, this repo comes with a demo that you can throw onto your screen in fullscreen mode as it is. If you want to embed the effect into your website, the demo shows you how it's done.
+
 ## Concept
 
-The _Matrix_ object can be attached to a container which needs to have a defined size and height via _absolute_, _relative_  or _fixed_ positioning. The effect will work best out of the box, but it can be adjusted via an _options_ object that is passed into the `Matrix` constructor. Check out [`./src/matrix.js`](./src/matrix.js) to check out all options and their defaults.
+The _Matrix_ object can be attached to a container which needs to have a defined size and height via _absolute_, _relative_  or _fixed_ positioning. The effect will work best out of the box, but it can be adjusted via an _options_ object that is passed into the `Matrix` constructor. Check out [`./src/matrix.js`](./src/matrix.js) to see all options and their default values.
 
 The _Matrix_ object has a `run()` and a `stop()` method to start/stop the animation. Alternatively you can call the `render()` function directly to execute the next render step.
 
 In each render step
 * the _Matrix_ object will create _Trickles_ at random positions on the x-axis with a given probability
-* each _Trickle_ will drop a new _Symbol_, which will create the "trickle down" effect
-* each _Symbol_ will gradually fade out and change its character with a given probability. The fade out speed varies between _Symbols_ to create variation in _Trickle_ length.
+* each _Trickle_ will drop a new _Symbol_ one step down on the y-axis, which will create the "trickle down" effect
+* each _Symbol_ will gradually fade out and change its character with a given probability. The fade out speed varies between _Symbols_ to create variation in the length of the _Trickles_
 
 The software will also take care of deleting faded out _Symbols_ and _Trickles_ that have reached the container's bottom edge.
 
@@ -45,7 +45,7 @@ If you want to change the source code, you can use `$ npm run watch` to automati
 
 ## Limitations
 
-The software is **not** optimized for performance yet. For a large area to cover, you will need a processor with good single-thread performance to have a fluid animation.
+The software is **not** optimized for performance yet. For a large area to render in a fluid animation, you will need a processor with strong single-thread performance (as JavaScript is not multi-threaded by its nature).
 
 ## Sources & Attribution
 
