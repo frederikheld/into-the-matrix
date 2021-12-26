@@ -8,22 +8,33 @@
 
     <body>
         <div id="container"></div>
+        <!-- <div id="container" style="width: 100px; height: 200px;"></div> -->
 
         <div id="footer">
-            <div id="stats"></div>
-            <div id="controls">
-                <button id="button-stop">Stop</button>
-                <button id="button-start">Start</button>
+            <div id="hoover-area"></div>
+            <div id="content">
+                <div id="stats"></div>
+                <div id="controls">
+                    <button id="button-start">Start</button>
+                    <button id="button-stop">Stop</button>
+                    <button id="button-next">Next</button>
+                </div>
             </div>
         </div>
     </body>
 
     <script>
-        const cadence = 300
-        const debug = true
+        const cadence = 100
+
+        const options = {
+            newTrickleProbability: 0.1,
+            changeSymbolProbability: 0.05,
+            symbolSize: 24,
+            debug: false
+        }
 
         const container = document.getElementById('container')
-        const mc = new Matrix(container, 0.1, debug)
+        const mc = new Matrix(container, options)
 
         window.addEventListener('load', () => {
             mc.run(cadence, document.getElementById('stats'))
@@ -35,6 +46,10 @@
 
         document.getElementById('button-stop').addEventListener('click', () => {
             mc.stop()
+        })
+
+        document.getElementById('button-next').addEventListener('click', () => {
+            mc.render()
         })
     </script>
 </head>

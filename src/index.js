@@ -1,21 +1,27 @@
 'use strict'
 
 import css from './index.css'
-import Strand from './strand'
+import Trickle from './trickle'
 
 class Matrix {
 
-    constructor (parentEl, newStrandProbability = 0.1, debug = false) {
+    constructor (parentEl, options) {
         this.parentEl = parentEl
-        this.debug = debug
 
-        this.newStrandProbability = newStrandProbability // probability per column per render cycle
+        this.options = {
+            symbolSize: options.symbolSize || 16,
+            newTrickleProbability: options.newTrickleProbability || 0.1, // probability per column per render cycle,
+            changeSymbolProbability: options.changeSymbolProbability || 0.05, // the probability (per render cycle) that a symbol changes it's character
+            fontSizeScalingFactor: options.fontSizeScalingFactor || 1.0, // font size relative to `symbolSize`
+            widthScalingFactor: options.widthScalingFactor || 0.8, // width relative to `symbolSize`
+            debug: options.debug || false
+        }
 
-        this.columns = Math.floor(parseInt(getComputedStyle(parentEl).width) / 16) + 1
+        this.columns = Math.floor(parseInt(getComputedStyle(parentEl).width) / (this.options.symbolSize * this.options.widthScalingFactor))
 
         // Stores references to child elements that will be
         // created/deleted dynamically in each render step:
-        this.strands = []
+        this.trickles = []
         
         this.el = this.createElement()
         this.parentEl.append(this.el)
@@ -33,9 +39,12 @@ class Matrix {
      * 
      * @returns dom element
      */
-    createElement() {
+     createElement() {
         const el = document.createElement('div')
         el.classList.add('matrix')
+        if (this.options.debug) {
+            el.classList.add('debug')
+        }
 
         return el
     }
@@ -47,31 +56,28 @@ class Matrix {
     render () {
         const renderStartTime = new Date().getTime()
 
-        // delete all strands that are out of bounds:
-        this.strands = this.strands.filter((strand) => {
-            const parentHeight = this.el.clientHeight
-
-            const marginTop = parseInt(getComputedStyle(strand.el).marginTop)
-            
-            if (marginTop > parentHeight) {
-                strand.el.remove() // remove element from DOM
-                return false // remove object from references list
+        // remove all trickles that have no children anymore:
+        this.trickles = this.trickles.filter(trickle => {
+            if (trickle.el.children.length > 0) {
+                return true
             }
 
-            return true
+            trickle.el.remove()
+
+            return false
         })
 
-        // randomly add new strands in each column:
+        // randomly add new trickles in each column:
         for (let i = 0; i < this.columns; i++) {
-            if (Math.random() < this.newStrandProbability) {
-                const newStrand = new Strand(this.el, i, this.debug)
-                this.strands.push(newStrand)
+            if (Math.random() < this.options.newTrickleProbability) {
+                const newTrickle = new Trickle(this.el, i, this.options)
+                this.trickles.push(newTrickle)
             }
         }
 
-        // render all strands:
-        this.strands.map ((strand) => {
-            strand.render()
+        // render all trickles:
+        this.trickles.map ((trickle) => {
+            trickle.render()
         })
 
         this.renderTime = new Date().getTime() - renderStartTime
@@ -98,7 +104,7 @@ class Matrix {
     }
 
     updateStats (statsEl) {
-        statsEl.innerHTML = `# of cols: ${this.columns} | # of strands: ${this.strands.length} | render time: ${this.renderTime} ms`
+        statsEl.innerHTML = `# of cols: ${this.columns} | # of trickles: ${this.trickles.length} | render time: ${this.renderTime} ms`
     }
 }
 

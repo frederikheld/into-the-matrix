@@ -2,12 +2,13 @@ const path = require('path')
 const webpack = require('webpack')
 
 module.exports = {
+    mode: 'development',
     entry: './src/index.js',
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist'),
         libraryTarget: 'var',
-        library: 'IntoTheMatrix',
+        library: 'Matrix',
         libraryExport: 'default'
     },
     optimization: {

@@ -6,10 +6,6 @@ html, body {
 
 #container {
     position: relative;
-    /* top: 10%;
-    left: 10%;
-    width: 60%;
-    height: 60%; */
     width: 100%;
     height: 100%;
     background-color: black;
@@ -18,8 +14,6 @@ html, body {
 }
 
 .matrix {
-    /* display: flex;
-    flex-direction: row; */
     width: 100%;
     height: 100%;
     display: block;
@@ -28,22 +22,32 @@ html, body {
     top: 0;
 }
 
-.strand {
-    /* display: flex; */
-    /* flex-direction: column; */
-    /* gap: 0.2rem; */
-    display: block;
-    position: absolute;
-}
-
 .symbol {
     display: block;
     position: relative;
-    font-size: 16px;
-    margin: -0.3rem 0;
-    text-shadow: 0 0 4px rgb(42, 255, 42);
+
     font-family: monospace;
-    /* background-color: red; */
+    text-align: center;
+    
+    /* defaults. Will be set in Symbol.constructor() according to options.fontSize */
+    font-size: 0.8em;
+    height: 16px;
+    line-height: 16px;
+    width: 16px;
+
+    margin: -0.3rem 0;
+    text-shadow: 0 0 4px rgb(42, 255, 42), 0 0 8px rgb(42, 255, 42); /* @TODO: blur radius needs to be adapted to options.fontSize! */
+}
+
+.new-symbol {
+    color: rgb(255, 255, 255);
+}
+
+
+/* DEBUG MODE */
+
+.debug .symbol {
+    border: 1px solid red;
 }
 
 
@@ -52,18 +56,31 @@ html, body {
 #footer {
     position: fixed;
     bottom: 0;
-    padding: 0.5rem;
     width: 100%;
     box-sizing: border-box;
 
+    margin-bottom: -38px;
+    transition-duration: 0.2s;
+}
+
+#hoover-area {
+    /* 
+     * creates an invisible area that
+     * will reveal the footer on hover.
+     */
+    height: 8px;
+    width: 100%;
+    background:rgba(255, 0, 0, 0.0);
+}
+
+#content {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    
+    padding: 0.5rem;
 
     background-color: rgba(255, 255, 255, 0.5);
-
-    margin-bottom: -36px;
-    transition-duration: 0.2s;
 }
 
 #footer:hover {
