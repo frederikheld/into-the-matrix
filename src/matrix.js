@@ -32,6 +32,9 @@ class Matrix {
 
         // time in millis needed to render the whole matrix:
         this.renderTime
+
+        this.animationHandler
+        this.lastRenderTime
     }
 
     /**
@@ -97,24 +100,37 @@ class Matrix {
         })
     }
 
+
     /**
      * Automatically runs the render function periodically.
      */
     run (cadence = 1000, statsEl = undefined) {
-        this.renderTimer = setInterval(() => {
-            this.render()
+        // this.renderTimer = setInterval(() => {
+        //     this.render()
 
+        //     if (statsEl) {
+        //         this.updateStats(statsEl)
+        //     }
+        // }, cadence)
+        this.animationHandler = requestAnimationFrame(() => { 
+            this.run(cadence, statsEl)
+        })
+        const currentRenderTime = Date.now()
+            if (!this.lastRenderTime || currentRenderTime > this.lastRenderTime + cadence) {
+            this.render()
             if (statsEl) {
                 this.updateStats(statsEl)
             }
-        }, cadence)
+            this.lastRenderTime = currentRenderTime 
+        }
     }
 
     /**
      * Stops the automatic rendering. It can be continued with run().
      */
     stop () {
-        clearInterval(this.renderTimer)
+        // clearInterval(this.renderTimer)
+        cancelAnimationFrame(this.animationHandler)
     }
 
     updateStats (statsEl) {
