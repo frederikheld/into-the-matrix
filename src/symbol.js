@@ -20,11 +20,11 @@ class Symbol {
 
         this.id = Date.now() + '' + Math.floor(Math.random() * 1000000)
 
-        this.el = this.getElement()
+        this.el = this.createElement()
         this.parentEl.append(this.el)
     }
 
-    getElement () {
+    createElement () {
         const el = document.createElement('div')
         el.classList.add('symbol')
         el.classList.add('new-symbol')
@@ -44,7 +44,7 @@ class Symbol {
         return el
     }
 
-    render () {
+    async render () {
         if (this.iteration > 0) {
             this.el.classList.remove('new-symbol')
         }
@@ -67,6 +67,8 @@ class Symbol {
 
         // Start next iteration:
         this.iteration++
+
+        return true
     }
 }
 

@@ -53,19 +53,28 @@ class Matrix {
      * Call the render() function in each iteration to
      * update the presentation of the "Matrix" dom element.
      */
-    render () {
+    async render () {
         const renderStartTime = new Date().getTime()
 
-        // remove all trickles that have no children anymore:
-        this.trickles = this.trickles.filter(trickle => {
-            if (trickle.el.children.length > 0) {
-                return true
+        // remove trickles that have no children anymore:
+        // this.trickles = this.trickles.filter(trickle => {
+        //     if (trickle.el.children.length > 0) {
+        //         return true
+        //     }
+
+        //     trickle.el.remove()
+
+        //     return false
+        // })
+        for (let i = 0; i < this.trickles.length; i++) {
+            if (this.trickles[i].el.children.length <= 0) {
+                // remove element from DOM:
+                this.trickles[i].el.remove()
+
+                // remove object reference:
+                this.trickles.splice(i, 1)
             }
-
-            trickle.el.remove()
-
-            return false
-        })
+        }
 
         // randomly add new trickles in each column:
         for (let i = 0; i < this.columns; i++) {
@@ -76,11 +85,14 @@ class Matrix {
         }
 
         // render all trickles:
-        this.trickles.map ((trickle) => {
-            trickle.render()
-        })
+        // this.trickles.forEach(trickle => trickle.render())
+        for (let i = 0; i < this.trickles.length; i++) {
+            this.trickles[i].render()
+        }
 
         this.renderTime = new Date().getTime() - renderStartTime
+
+        return true
     }
 
     /**
