@@ -2,8 +2,8 @@ const path = require('path')
 const webpack = require('webpack')
 
 module.exports = {
-    mode: 'development',
-    entry: './src/index.js',
+    mode: 'production',
+    entry: './src/matrix.js',
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist'),
