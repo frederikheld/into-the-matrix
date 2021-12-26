@@ -18,8 +18,6 @@ class Symbol {
 
         this.options = options
 
-        this.id = Date.now() + '' + Math.floor(Math.random() * 1000000)
-
         this.el = this.createElement()
         this.parentEl.append(this.el)
     }
@@ -28,7 +26,6 @@ class Symbol {
         const el = document.createElement('div')
         el.classList.add('symbol')
         el.classList.add('new-symbol')
-        el.id = this.id
 
         el.style.display = 'block'
         el.style.position = 'absolute'
@@ -55,7 +52,9 @@ class Symbol {
 
             // Delete element if it is faded out:
             if (opacity <= 0.0) {
-                // console.log('removing element')
+                if (this.options.debug) {
+                    console.log('removing faded out symbol')
+                }
                 this.el.remove()
                 return
             }
