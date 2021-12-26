@@ -5,10 +5,13 @@ import Trickle from './trickle'
 
 class Matrix extends HTMLElement {
 
+    availableRenderModes = ['request-animation-frame', 'set-interval'] // first element is the default mode!
+
     constructor (parentEl, options) {
         super()
 
         this.parentEl = parentEl
+
 
         this.options = {
             symbolSize: options.symbolSize || 16,
@@ -16,7 +19,16 @@ class Matrix extends HTMLElement {
             changeSymbolProbability: options.changeSymbolProbability || 0.05, // the probability (per render cycle) that a symbol changes it's character
             fontSizeScalingFactor: options.fontSizeScalingFactor || 1.0, // font size relative to `symbolSize`
             widthScalingFactor: options.widthScalingFactor || 0.8, // width relative to `symbolSize`
+            renderMode: options.renderMode || this.availableRenderModes[0], // render method. Options are defined in this.availableRenderModes. Defaults to the first mode in this list.
             debug: options.debug || false
+        }
+        if (!this.availableRenderModes.includes(this.options.renderMode)) {
+            console.warn('`' + this.options.renderMode + '` is not a valid value for `options.renderMode`! Defaulting to `' + this.availableRenderModes[0] + '`. Valid options are: ' + this.availableRenderModes.map(el => '`' + el + '`').join(', ') + '.')
+            this.options.renderMode = this.availableRenderModes[0]
+        }
+
+        if (this.options.debug) {
+            console.log('options:', this.options)
         }
 
         this.columns = Math.floor(parseInt(getComputedStyle(parentEl).width) / (this.options.symbolSize * this.options.widthScalingFactor))
@@ -24,13 +36,11 @@ class Matrix extends HTMLElement {
         this.rigElement()
         this.parentEl.append(this)
 
-        // will store a reference to the timer created in run()
-        // to be able to stop this timer in stop():
-        this.renderTimer
+        // if render mode `set-interval`:
+        this.renderTimer // reference to the render timer created in run()      
+        this.renderTime // time in millis needed to render the whole matrix (for statistics)
 
-        // time in millis needed to render the whole matrix:
-        this.renderTime
-
+        // if render mode `request-animation-frame:
         this.animationHandler
         this.lastRenderTime
     }
@@ -55,22 +65,10 @@ class Matrix extends HTMLElement {
         return new Promise((resolve, reject) => {
             const renderStartTime = new Date().getTime()
 
-            // remove trickles that have no children anymore:
-            // this.trickles = this.trickles.filter(trickle => {
-            //     if (trickle.el.children.length > 0) {
-            //         return true
-            //     }
-
-            //     trickle.el.remove()
-
-            //     return false
-            // })
             if (this.options.debug) {
                 console.log('# of columns:', this.columns)
-                console.log('# of trickles:', this.trickles.length)
+                console.log('# of trickles:', this.children.length)
             }
-            // for (let i = 0; i < this.trickles.length; i++) {
-            // }
 
             // randomly add new trickles in each column:
             for (let i = 0; i < this.columns; i++) {
@@ -86,7 +84,8 @@ class Matrix extends HTMLElement {
             // process trickles:
             // this.trickles.forEach(trickle => trickle.render())
             for (let i = 0; i < this.children.length; i++) {
-                // remove trickle if it has run dry:
+                // remove trickle if it has no children anymore:
+                // console.log(this.children[i].children)
                 if (this.children[i].children.length <= 0) {
                     if (this.options.debug) {
                         console.log('  > removing run dry trickle')
@@ -119,23 +118,30 @@ class Matrix extends HTMLElement {
      * Automatically runs the render function periodically.
      */
     run (cadence = 1000, statsEl = undefined) {
-        // this.renderTimer = setInterval(() => {
-        //     this.render()
+        if (this.options.renderMode === 'set-interval') {
 
-        //     if (statsEl) {
-        //         this.updateStats(statsEl)
-        //     }
-        // }, cadence)
-        this.animationHandler = requestAnimationFrame(() => { 
-            this.run(cadence, statsEl)
-        })
-        const currentRenderTime = Date.now()
-            if (!this.lastRenderTime || currentRenderTime > this.lastRenderTime + cadence) {
-            this.render()
-            if (statsEl) {
-                this.updateStats(statsEl)
+            this.renderTimer = setInterval(() => {
+                this.render()
+
+                if (statsEl) {
+                    this.updateStats(statsEl)
+                }
+            }, cadence)
+
+        } else {
+
+            this.animationHandler = requestAnimationFrame(() => { 
+                this.run(cadence, statsEl)
+            })
+            const currentRenderTime = Date.now()
+                if (!this.lastRenderTime || currentRenderTime > this.lastRenderTime + cadence) {
+                this.render()
+                if (statsEl) {
+                    this.updateStats(statsEl)
+                }
+                this.lastRenderTime = currentRenderTime 
             }
-            this.lastRenderTime = currentRenderTime 
+
         }
     }
 
@@ -143,8 +149,11 @@ class Matrix extends HTMLElement {
      * Stops the automatic rendering. It can be continued with run().
      */
     stop () {
-        // clearInterval(this.renderTimer)
-        cancelAnimationFrame(this.animationHandler)
+        if (this.options.renderMode === 'set-interval') {
+            clearInterval(this.renderTimer)
+        } else {
+            cancelAnimationFrame(this.animationHandler)
+        }
     }
 
     updateStats (statsEl) {
