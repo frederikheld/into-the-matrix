@@ -32,9 +32,12 @@ class Symbol {
 
         el.style.display = 'block'
         el.style.position = 'absolute'
-        el.style.top = (this.options.fontSize * this.row) + 'px'
-        el.style.left  = (this.options.fontSize * this.column) + 'px'
-        el.style.fontSize = this.options.fontSize + 'px'
+        el.style.top = this.options.symbolSize * this.row + 'px'
+        el.style.left  = (this.options.symbolSize * this.options.widthScalingFactor * this.column) + 'px'
+        el.style.fontSize = (this.options.symbolSize * this.options.fontSizeScalingFactor) + 'px'
+        el.style.height = this.options.symbolSize + 'px'
+        el.style.width = (this.options.symbolSize * this.options.widthScalingFactor) + 'px'
+        el.style.lineHeight = this.options.symbolSize + 'px'
 
         el.innerText = this.characters[Math.floor(Math.random() * (this.characters.length - 1))] // duplicate with render()
 

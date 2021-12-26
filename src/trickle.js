@@ -5,12 +5,12 @@ import Symbol from "./symbol"
 class Trickle {
     currentRow = 0
 
-    constructor (parentEl, column, options) {
+    constructor (parentEl, column, options = {}) {
         this.parentEl = parentEl
         this.column = column
 
         this.changeSymbolProbability = options.changeSymbolProbability
-        this.fadeOutSpeed = (Math.floor(Math.random() * 20) + 5) / 100 // @TODO: this should be something like a bell curve!
+        this.fadeOutSpeed = (Math.floor(Math.random() * 20) + 3) / 100 // @TODO: this should be something like a bell curve!
 
         this.options = options
 
@@ -32,12 +32,9 @@ class Trickle {
     }
 
     render () {
-        // Move to next position:
-        this.currentRow++
-
         // Drop new symbol at current position if trickle is not out of bounds:
-        if (this.currentRow * this.options.fontSize < this.parentElHeight) {
-            const newSymbol = new Symbol(this.el, this.column, this.currentRow, this.changeSymbolProbability, this.fadeOutSpeed, options)
+        if (this.currentRow * this.options.symbolSize < this.parentElHeight) {
+            const newSymbol = new Symbol(this.el, this.column, this.currentRow, this.changeSymbolProbability, this.fadeOutSpeed, this.options)
             this.symbols.push(newSymbol)
         }
 
@@ -45,6 +42,9 @@ class Trickle {
         this.symbols.map((symbol) => {
             symbol.render()
         })
+
+        // Move to next position:
+        this.currentRow++
     }
 
 

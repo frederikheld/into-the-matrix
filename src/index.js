@@ -9,12 +9,15 @@ class Matrix {
         this.parentEl = parentEl
 
         this.options = {
-            fontSize: options.fontSize || 16,
+            symbolSize: options.symbolSize || 16,
             newTrickleProbability: options.newTrickleProbability || 0.1, // probability per column per render cycle,
-            changeSymbolProbability: options.changeSymbolProbability || 0.1 // the probability (per render cycle) that a symbol changes it's character
+            changeSymbolProbability: options.changeSymbolProbability || 0.05, // the probability (per render cycle) that a symbol changes it's character
+            fontSizeScalingFactor: options.fontSizeScalingFactor || 1.0, // font size relative to `symbolSize`
+            widthScalingFactor: options.widthScalingFactor || 0.8, // width relative to `symbolSize`
+            debug: options.debug || false
         }
 
-        this.columns = Math.floor(parseInt(getComputedStyle(parentEl).width) / this.options.fontSize) + 1
+        this.columns = Math.floor(parseInt(getComputedStyle(parentEl).width) / (this.options.symbolSize * this.options.widthScalingFactor))
 
         // Stores references to child elements that will be
         // created/deleted dynamically in each render step:
@@ -39,6 +42,9 @@ class Matrix {
      createElement() {
         const el = document.createElement('div')
         el.classList.add('matrix')
+        if (this.options.debug) {
+            el.classList.add('debug')
+        }
 
         return el
     }
@@ -64,7 +70,7 @@ class Matrix {
         // randomly add new trickles in each column:
         for (let i = 0; i < this.columns; i++) {
             if (Math.random() < this.options.newTrickleProbability) {
-                const newTrickle = new Trickle(this.el, i, options)
+                const newTrickle = new Trickle(this.el, i, this.options)
                 this.trickles.push(newTrickle)
             }
         }
