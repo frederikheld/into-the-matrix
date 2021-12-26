@@ -2,10 +2,12 @@
 
 import Symbol from './symbol'
 
-class Trickle {
+class Trickle extends HTMLElement {
     currentRow = 0
 
     constructor (parentEl, column, options = {}) {
+        super()
+
         this.parentEl = parentEl
         this.column = column
 
@@ -14,12 +16,8 @@ class Trickle {
 
         this.options = options
 
-        // Stores references to child elements that will
-        // be created when the element is being created:
-        this.symbols = []
-
-        this.el = this.createElement()
-        this.parentEl.append(this.el)
+        this.rigElement()
+        this.parentEl.append(this)
 
         this.parentElHeight = parseInt(getComputedStyle(this.parentEl).height)
 
@@ -31,38 +29,31 @@ class Trickle {
         this.render()
     }
 
-    createElement () {
-        const el = document.createElement('div')
-        el.classList.add('trickle')
-
-        return el
+    rigElement () {
+        this.classList.add('trickle')
     }
 
     async render () {
         return new Promise ((resolve, reject) => {
             // Drop new symbol at current position if trickle is not out of bounds:
             if (this.currentRow * this.options.symbolSize < this.parentElHeight) {
-                const newSymbol = new Symbol(this.el, this.column, this.currentRow, this.changeSymbolProbability, this.fadeOutSpeed, this.options)
-                this.symbols.push(newSymbol)
+                new Symbol(this, this.column, this.currentRow, this.changeSymbolProbability, this.fadeOutSpeed, this.options)
             }
 
             // Render all symbols:
-            // this.symbols.forEach(symbol => symbol.render())
-            for (let i = 0; i < this.symbols.length; i++) {
+            // this.children.forEach(symbol => symbol.render())
+            for (let i = 0; i < this.children.length; i++) {
 
                 // Delete element if it is faded out:
-                if (this.symbols[i].el.style.opacity <= 0.0) {
+                if (this.children[i].style.opacity <= 0.0) {
                     if (this.options.debug) {
                         console.log('removing faded out symbol')
                     }
 
                     // remove element from DOM:
-                    this.symbols[i].el.remove()
-
-                    // remove object reference:
-                    this.symbols.splice(i, 1)
+                    this.children[i].remove()
                 } else {
-                    this.symbols[i].render()
+                    this.children[i].render()
                 }
             }
 
@@ -75,5 +66,7 @@ class Trickle {
 
 
 }
+
+window.customElements.define('matrix-trickle', Trickle)
 
 export default Trickle

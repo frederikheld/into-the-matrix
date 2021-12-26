@@ -3,9 +3,11 @@
 import css from './index.css'
 import Trickle from './trickle'
 
-class Matrix {
+class Matrix extends HTMLElement {
 
     constructor (parentEl, options) {
+        super()
+
         this.parentEl = parentEl
 
         this.options = {
@@ -19,12 +21,8 @@ class Matrix {
 
         this.columns = Math.floor(parseInt(getComputedStyle(parentEl).width) / (this.options.symbolSize * this.options.widthScalingFactor))
 
-        // Stores references to child elements that will be
-        // created/deleted dynamically in each render step:
-        this.trickles = []
-        
-        this.el = this.createElement()
-        this.parentEl.append(this.el)
+        this.rigElement()
+        this.parentEl.append(this)
 
         // will store a reference to the timer created in run()
         // to be able to stop this timer in stop():
@@ -42,14 +40,11 @@ class Matrix {
      * 
      * @returns dom element
      */
-     createElement() {
-        const el = document.createElement('div')
-        el.classList.add('matrix')
+     rigElement() {
+        this.classList.add('matrix')
         if (this.options.debug) {
-            el.classList.add('debug')
+            this.classList.add('debug')
         }
-
-        return el
     }
 
     /**
@@ -84,32 +79,28 @@ class Matrix {
                         console.log('  > adding new trickle')
                     }
 
-                    const newTrickle = new Trickle(this.el, i, this.options)
-                    this.trickles.push(newTrickle)
+                    new Trickle(this, i, this.options)
                 }
             }
 
             // process trickles:
             // this.trickles.forEach(trickle => trickle.render())
-            for (let i = 0; i < this.trickles.length; i++) {
+            for (let i = 0; i < this.children.length; i++) {
                 // remove trickle if it has run dry:
-                if (this.trickles[i].el.children.length <= 0) {
+                if (this.children[i].children.length <= 0) {
                     if (this.options.debug) {
                         console.log('  > removing run dry trickle')
                     }
 
                     // remove element from DOM:
-                    this.trickles[i].el.remove()
-
-                    // remove object reference:
-                    this.trickles.splice(i, 1)
+                    this.children[i].remove()
                 } else {
                     if (this.options.debug) {
                         console.log('  > rendering trickle')
                     }
 
                     // render trickle if it has children:
-                    this.trickles[i].render()
+                    this.children[i].render()
                 }
             }
 
@@ -157,8 +148,10 @@ class Matrix {
     }
 
     updateStats (statsEl) {
-        statsEl.innerHTML = `# of cols: ${this.columns} | # of trickles: ${this.trickles.length} | render time: ${this.renderTime} ms`
+        statsEl.innerHTML = `# of cols: ${this.columns} | # of trickles: ${this.children.length} | render time: ${this.renderTime} ms`
     }
 }
+
+window.customElements.define('matrix-matrix', Matrix)
 
 export default Matrix
