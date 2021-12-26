@@ -54,45 +54,47 @@ class Matrix {
      * update the presentation of the "Matrix" dom element.
      */
     async render () {
-        const renderStartTime = new Date().getTime()
+        return new Promise((resolve, reject) => {
+            const renderStartTime = new Date().getTime()
 
-        // remove trickles that have no children anymore:
-        // this.trickles = this.trickles.filter(trickle => {
-        //     if (trickle.el.children.length > 0) {
-        //         return true
-        //     }
+            // remove trickles that have no children anymore:
+            // this.trickles = this.trickles.filter(trickle => {
+            //     if (trickle.el.children.length > 0) {
+            //         return true
+            //     }
 
-        //     trickle.el.remove()
+            //     trickle.el.remove()
 
-        //     return false
-        // })
-        for (let i = 0; i < this.trickles.length; i++) {
-            if (this.trickles[i].el.children.length <= 0) {
-                // remove element from DOM:
-                this.trickles[i].el.remove()
+            //     return false
+            // })
+            for (let i = 0; i < this.trickles.length; i++) {
+                if (this.trickles[i].el.children.length <= 0) {
+                    // remove element from DOM:
+                    this.trickles[i].el.remove()
 
-                // remove object reference:
-                this.trickles.splice(i, 1)
+                    // remove object reference:
+                    this.trickles.splice(i, 1)
+                }
             }
-        }
 
-        // randomly add new trickles in each column:
-        for (let i = 0; i < this.columns; i++) {
-            if (Math.random() < this.options.newTrickleProbability) {
-                const newTrickle = new Trickle(this.el, i, this.options)
-                this.trickles.push(newTrickle)
+            // randomly add new trickles in each column:
+            for (let i = 0; i < this.columns; i++) {
+                if (Math.random() < this.options.newTrickleProbability) {
+                    const newTrickle = new Trickle(this.el, i, this.options)
+                    this.trickles.push(newTrickle)
+                }
             }
-        }
 
-        // render all trickles:
-        // this.trickles.forEach(trickle => trickle.render())
-        for (let i = 0; i < this.trickles.length; i++) {
-            this.trickles[i].render()
-        }
+            // render all trickles:
+            // this.trickles.forEach(trickle => trickle.render())
+            for (let i = 0; i < this.trickles.length; i++) {
+                this.trickles[i].render()
+            }
 
-        this.renderTime = new Date().getTime() - renderStartTime
+            this.renderTime = new Date().getTime() - renderStartTime
 
-        return true
+            resolve()
+        })
     }
 
     /**

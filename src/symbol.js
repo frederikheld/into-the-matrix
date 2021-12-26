@@ -45,30 +45,32 @@ class Symbol {
     }
 
     async render () {
-        if (this.iteration > 0) {
-            this.el.classList.remove('new-symbol')
-        }
+        return new Promise((resolve, reject) => {
+            if (this.iteration > 0) {
+                this.el.classList.remove('new-symbol')
+            }
 
-        // Reduce opacity according to fade out speed:
-        const opacity = 1.0 - (this.iteration * this.fadeOutSpeed)
+            // Reduce opacity according to fade out speed:
+            const opacity = 1.0 - (this.iteration * this.fadeOutSpeed)
 
-        // Delete element if it is faded out:
-        if (opacity <= 0.0) {
-            // console.log('removing element')
-            this.el.remove()
-            return
-        }
-        this.el.style.opacity = opacity
+            // Delete element if it is faded out:
+            if (opacity <= 0.0) {
+                // console.log('removing element')
+                this.el.remove()
+                return
+            }
+            this.el.style.opacity = opacity
 
-        // Change symbol according to probability:
-        if (Math.random() < this.changeSymbolProbability) {
-            this.el.innerText = this.characters[Math.floor(Math.random() * (this.characters.length - 1))]
-        }
+            // Change symbol according to probability:
+            if (Math.random() < this.changeSymbolProbability) {
+                this.el.innerText = this.characters[Math.floor(Math.random() * (this.characters.length - 1))]
+            }
 
-        // Start next iteration:
-        this.iteration++
+            // Start next iteration:
+            this.iteration++
 
-        return true
+            resolve()
+        })
     }
 }
 
