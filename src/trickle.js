@@ -3,7 +3,7 @@
 import Symbol from './symbol'
 
 class Trickle extends HTMLElement {
-    currentRow = 0
+    currentRow = -1 // -1 to compensate for the first render run in the constructor
 
     constructor (parentEl, column, options = {}) {
         super()
