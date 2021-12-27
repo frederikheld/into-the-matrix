@@ -9,7 +9,6 @@ html, body {
     width: 100%;
     height: 100%;
     background-color: black;
-    color: rgb(42, 255, 42);
     overflow: hidden;
 }
 
@@ -23,6 +22,10 @@ html, body {
 }
 
 .symbol {
+    color: rgba(42, 255, 42);
+    /* text-shadow: 0 0 4px rgb(42, 255, 42), 0 0 8px rgb(42, 255, 42); */
+    /* text-shadow is being set in Symbol.render() now to be able to adapt it to options.symbolSize */
+
     display: block;
     position: relative;
 
@@ -36,11 +39,18 @@ html, body {
     width: 16px;
 
     margin: -0.3rem 0;
-    text-shadow: 0 0 4px rgb(42, 255, 42), 0 0 8px rgb(42, 255, 42); /* @TODO: blur radius needs to be adapted to options.fontSize! */
+
+    /* will-change: opacity; */
+    /* `will-change` drives the overall performance down by magnitudes in this case!
+     * Render time as measuread by Matrix will go down, but so do the FPS because
+     * layer creation triggered by `will-change` apparently adds lots of overhead.
+     * see explanation here: https://web.dev/animations-guide/#force
+     * see docs here: https://developer.mozilla.org/en-US/docs/Web/CSS/will-change
+     */
 }
 
 .new-symbol {
-    color: rgb(255, 255, 255);
+    color: rgb(255, 255, 255) !important;
 }
 
 
