@@ -33,9 +33,9 @@ Build the package with `$ npm run build`. This will create a file [`./dist/bundl
 
 The simplest way to run the matrix effect is to open [`./demo/index.html`](./demo/index.html) in your web browser. The effect looks best if the browser is run in fullscreen mode (press <kbd>F11</kbd> on most browser to enter/leave fullscreen mode).
 
-When you load the page, the number of trickles will be determined by the width of the container. In the demo this is equal to the width of the viewport. If you change the size of the browser window, it's best to refresh the page to update the number of trickles.
+The demo also comes with a status bar that will become visible if you move the mouse pointer to the lower edge of the window. It shows stats about the rendering and buttons to start and stop the animation.
 
-The demo also comes with a toolbar that will become visible if you move the mouse pointer to the lower edge of the window. It shows stats about the rendering and buttons to start and stop the animation.
+If you change the size of the window, the _Matrix_ will automatically adapt its number of columns and length of the _Trickles_. You will see how the number of trickles and with it the rendering time changes in the status bar after the resize.
 
 ## Develop
 
