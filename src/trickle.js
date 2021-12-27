@@ -26,35 +26,24 @@ class Trickle extends HTMLElement {
          * This allows to do the removing and rendering in the same loop over the trickles 
          * in `Matrix.render()`.
          */
-        this.render()
+        this.render(this.clientHeight)
     }
 
     rigElement () {
         this.classList.add('trickle')
     }
 
-    async render () {
+    async render (height) {
         return new Promise ((resolve, reject) => {
             // Drop new symbol at current position if trickle is not out of bounds:
-            if (this.currentRow * this.options.symbolSize < this.parentElHeight) {
+            if (this.currentRow * this.options.symbolSize < height) {
                 new Symbol(this, this.column, this.currentRow, this.changeSymbolProbability, this.fadeOutSpeed, this.options)
             }
 
             // Render all symbols:
             // this.children.forEach(symbol => symbol.render())
             for (let i = 0; i < this.children.length; i++) {
-
-                // Delete element if it is faded out:
-                if (this.children[i].style.opacity <= 0.0) {
-                    if (this.options.debug) {
-                        console.log('removing faded out symbol')
-                    }
-
-                    // remove element from DOM:
-                    this.children[i].remove()
-                } else {
-                    this.children[i].render()
-                }
+                this.children[i].render()
             }
 
             // Move to next position:

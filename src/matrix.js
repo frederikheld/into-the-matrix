@@ -62,6 +62,10 @@ class Matrix extends HTMLElement {
      */
     async render () {
         return new Promise((resolve, reject) => {
+            const height = this.clientHeight
+
+            this.style.display = 'none'
+
             const renderStartTime = new Date().getTime()
 
             if (this.options.debug) {
@@ -84,7 +88,6 @@ class Matrix extends HTMLElement {
             // this.trickles.forEach(trickle => trickle.render())
             for (let i = 0; i < this.children.length; i++) {
                 // remove trickle if it has no children anymore:
-                // console.log(this.children[i].children)
                 if (this.children[i].children.length <= 0) {
                     if (this.options.debug) {
                         console.log('  > removing run dry trickle')
@@ -98,7 +101,7 @@ class Matrix extends HTMLElement {
                     }
 
                     // render trickle if it has children:
-                    this.children[i].render()
+                    this.children[i].render(height)
                 }
             }
 
@@ -107,6 +110,8 @@ class Matrix extends HTMLElement {
             if (this.options.debug) {
                 console.log('----------')
             }
+
+            this.style.display = 'block'
 
             resolve()
         })
