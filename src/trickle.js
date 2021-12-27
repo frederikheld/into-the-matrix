@@ -52,8 +52,6 @@ class Trickle extends HTMLElement {
             resolve()
         })
     }
-
-
 }
 
 window.customElements.define('matrix-trickle', Trickle)

@@ -30,7 +30,7 @@ class Matrix extends HTMLElement {
             console.log('options:', this.options)
         }
 
-        this.columns = Math.floor(parseInt(getComputedStyle(parentEl).width) / (this.options.symbolSize * this.options.widthScalingFactor))
+        this.resize()
 
         this.rigElement()
         this.parentEl.append(this)
@@ -115,6 +115,14 @@ class Matrix extends HTMLElement {
 
             resolve()
         })
+    }
+
+    resize () {
+        this.columns = Math.floor(parseInt(getComputedStyle(this.parentEl).width) / (this.options.symbolSize * this.options.widthScalingFactor))
+
+        if (this.options.debug) {
+            console.log('resizing Matrix to ' + this.columns + ' columns')
+        }
     }
 
 
