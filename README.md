@@ -50,3 +50,17 @@ The software is **not** optimized for performance yet. For a large area to rende
 ## Sources & Attribution
 
 * [Matrix Digital Rain](https://en.wikipedia.org/wiki/Matrix_digital_rain) explained on Wikipedia
+
+
+## What I learned with this project
+
+> A lot of my projects on GitHub start from a fun idea but become exercises in new tech. This is the reflection about what I learned with this project.
+
+The better part of this project was about improving rendering performance.
+
+* how browser rendering works
+    * `setTimeout()` vs `requestAnimationFrame()`
+    * different layers of rendering and how to avoid rendering more than needed
+* about the performance impact of different CSS properties
+* about the performance impact of different ways to loop over an array in JS
+* how to use WebWorkers

@@ -1,0 +1,17 @@
+{
+  "name": "multi-core-frameset",
+  "version": "0.1.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "watch": "nodemon server.js --ignore 'public/scripts/**'"
+  },
+  "author": "Frederik S. Held (kontakt@frederikheld.de)",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "express": "^4.17.2",
+    "nodemon": "^2.0.15"
+  }
+}

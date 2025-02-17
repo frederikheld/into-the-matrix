@@ -60,8 +60,8 @@ class Matrix extends HTMLElement {
      * Call the render() function in each iteration to
      * update the presentation of the "Matrix" dom element.
      */
-    async render () {
-        return new Promise((resolve, reject) => {
+    render (returnNewDOMElement = false) {
+        // return new Promise((resolve, reject) => {
             const height = this.clientHeight
 
             this.style.display = 'none'
@@ -113,8 +113,13 @@ class Matrix extends HTMLElement {
 
             this.style.display = 'block'
 
-            resolve()
-        })
+            if (returnNewDOMElement) {
+                return this
+            } else {
+                // resolve()
+                return true
+            }
+        // })
     }
 
     resize () {
@@ -173,6 +178,6 @@ class Matrix extends HTMLElement {
     }
 }
 
-window.customElements.define('matrix-matrix', Matrix)
+window.customElements.define('m-matrix', Matrix)
 
 export default Matrix

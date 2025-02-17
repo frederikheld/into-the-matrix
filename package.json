@@ -11,6 +11,7 @@
   "author": "Frederik S. Held (kontakt@frederikheld.de)",
   "license": "GPL-3.0-or-later",
   "dependencies": {
+    "express": "^4.17.2",
     "nodemon": "^2.0.15"
   },
   "devDependencies": {

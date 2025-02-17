@@ -54,6 +54,6 @@ class Trickle extends HTMLElement {
     }
 }
 
-window.customElements.define('matrix-trickle', Trickle)
+window.customElements.define('m-trickle', Trickle)
 
 export default Trickle

@@ -39,9 +39,9 @@
         const container = document.getElementById('container')
         const mc = new Matrix(container, options)
 
-        window.addEventListener('load', () => {
-            mc.run(cadence, document.getElementById('stats'))
-        })
+        // window.addEventListener('load', () => {
+        //     mc.run(cadence, document.getElementById('stats'))
+        // })
 
         document.getElementById('button-start').addEventListener('click', () => {
             mc.run(cadence, document.getElementById('stats'))
@@ -53,6 +53,10 @@
 
         document.getElementById('button-next').addEventListener('click', () => {
             mc.render()
+        })
+
+        window.addEventListener('resize', () => {
+            mc.resize()
         })
     </script>
 </body>

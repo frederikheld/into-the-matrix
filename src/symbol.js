@@ -88,6 +88,6 @@ class Symbol extends HTMLElement {
     }
 }
 
-window.customElements.define('matrix-symbol', Symbol)
+window.customElements.define('m-symbol', Symbol)
 
 export default Symbol
