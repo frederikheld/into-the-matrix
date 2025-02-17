@@ -49,7 +49,7 @@ class Matrix extends HTMLElement {
      * 
      * @returns dom element
      */
-     rigElement() {
+    rigElement() {
         this.classList.add('matrix')
         if (this.options.debug) {
             this.classList.add('debug')
@@ -61,6 +61,7 @@ class Matrix extends HTMLElement {
      * update the presentation of the "Matrix" dom element.
      */
     render (returnNewDOMElement = false) {
+        // requestAnimationFrame(() => {
         // return new Promise((resolve, reject) => {
             const height = this.clientHeight
 
@@ -119,6 +120,7 @@ class Matrix extends HTMLElement {
                 // resolve()
                 return true
             }
+        // })
         // })
     }
 
