@@ -7,12 +7,13 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     <button id="btnStart">Start</button>
     <button id="btnStop">Stop</button>
   </div>
-  <div id="matrix" style="margin-top: 8px; width: 400px;"></div>
+  <div id="matrix" style="margin-top: 8px; width: 2000px;"></div>
 </div>
 `
 
 const matrix = new SimpleMatrix(
-  document.querySelector<HTMLDivElement>('#matrix')!, 1000,
+  document.querySelector<HTMLDivElement>('#matrix')!,
+  5000,
   { maxFps: 30 }
 )
 
