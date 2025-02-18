@@ -79,6 +79,7 @@ export class SimpleMatrix {
 
   public getStats() {
     return {
+      symbolCount: this.el.children.length,
       minFrameTime: this.minFrameTime,
       maxFps: this.maxFps,
       frameTime: this.previousFrameTime,

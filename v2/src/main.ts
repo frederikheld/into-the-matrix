@@ -18,7 +18,7 @@ const matrix = new SimpleMatrix(
 const statsEl = document.querySelector<HTMLDivElement>("#stats")!
 setInterval(() => {
   const stats = matrix.getStats()
-  statsEl.innerHTML = `frame time: ${Math.ceil(stats.frameTime)} / ${Math.ceil(stats.minFrameTime)} ms | fps: ${Math.ceil(stats.fps)} / ${Math.ceil(stats.maxFps)}`
+  statsEl.innerHTML = `frame time: ${Math.ceil(stats.frameTime)} / ${Math.ceil(stats.minFrameTime)} ms | fps: ${Math.ceil(stats.fps)} / ${Math.ceil(stats.maxFps)} | nodes: ${stats.symbolCount}`
 }, 100)
 
 document.querySelector<HTMLButtonElement>('#btnStart')!.addEventListener('click', () => matrix.start())
