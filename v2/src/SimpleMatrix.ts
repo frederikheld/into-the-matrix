@@ -26,26 +26,32 @@ export class SimpleMatrix {
     this.minFrameTime = 1000 / this.maxFps
 
     // set up element and shadow dom:
-    this.el = document.createElement("div")
-    this.shadowRoot = this.el.attachShadow({ mode:'open' })
-    this.setup(count)
+    const rootEl = document.createElement("div")
+    this.shadowRoot = rootEl.attachShadow({ mode:'open' })
+    this.el = this.setup(count)
     this.shadowRoot.appendChild(this.el)
 
     this.parentEl.appendChild(this.shadowRoot)
   }
 
-  private setup (length: number): void {
-    this.el = document.createElement("div")
+  /**
+   * Creates and styles the element that represents
+   * the matrix, including its children.
+   */
+  private setup (length: number): HTMLDivElement {
+    const matrixEl = document.createElement("div")
 
-    this.el.setAttribute('style', convertToCssString({
+    matrixEl.setAttribute('style', convertToCssString({
       display: 'flex',
       'flex-direction': 'row',
       'flex-wrap': 'wrap'
     }))
 
     new Array(length).fill(0).forEach((_, index) => {
-      this.symbols.push(new SimpleSymbol(this.el, index))
+      this.symbols.push(new SimpleSymbol(matrixEl, index))
     })
+
+    return matrixEl
   }
 
   // rendering mechanics:
