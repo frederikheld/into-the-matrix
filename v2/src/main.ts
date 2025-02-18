@@ -1,11 +1,14 @@
+import { SimpleMatrix } from './SimpleMatrix'
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 <div>
-  <button id="btnFoo">Foo!</button>
+  <div id="matrix"></div>
+  <button id="btnStart">Start</button>
+  <button id="btnStop">Stop</button>
 </div>
 `
-export function foo() {
-  console.log('foo')
-  alert('foo')
-}
 
-document.querySelector<HTMLButtonElement>('#btnFoo')!.addEventListener('click', foo)
+const matrix = new SimpleMatrix(document.querySelector<HTMLDivElement>('#matrix')!)
+
+
+document.querySelector<HTMLButtonElement>('#btnStart')!.addEventListener('click', () => matrix.start())
+document.querySelector<HTMLButtonElement>('#btnStop')!.addEventListener('click', () => matrix.stop())
