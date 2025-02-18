@@ -8,6 +8,8 @@ Rewrite of the initial implementation in TypeScript.
 * Rewrite in TypeScript
 * Better documentation for classes and functions
 
+> CONTINUE: continue with `SimpleMatrix` and `SimpleSymbol`!
+
 ## Dev
 
 This project uses [Vite](https://vite.dev/) as build system.

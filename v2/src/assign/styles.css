@@ -1,0 +1,14 @@
+.matrix {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.symbol {
+    all: unset;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, red 0deg, red 30deg, blue 30deg, blue 360deg);
+    will-change: transform;
+}
