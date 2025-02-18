@@ -11,7 +11,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 `
 
 const matrix = new SimpleMatrix(
-  document.querySelector<HTMLDivElement>('#matrix')!, 200,
+  document.querySelector<HTMLDivElement>('#matrix')!, 1000,
   { maxFps: 60 }
 )
 

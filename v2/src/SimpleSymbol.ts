@@ -8,6 +8,8 @@ export class SimpleSymbol {
   constructor(parentEl: HTMLDivElement, index: number) {
     this.parentEl = parentEl
 
+    this.rotation = index
+
     this.el = document.createElement("div")
     this.shadowRoot = this.el.attachShadow({mode:'open'})
     this.setup(index)
@@ -16,13 +18,14 @@ export class SimpleSymbol {
     this.parentEl.appendChild(this.shadowRoot)
   }
 
-  private rotation: number = Math.random() * 360
+  // private rotation: number = Math.random() * 360
+  private rotation: number = 0
 
-  public render(){
+  public render() {
     // this.el.style.backgroundColor = `rgb(${getRandomColorValue()}, ${getRandomColorValue()}, ${getRandomColorValue()})`
     // this.el.style.transform = `rotate3d(0, 0, 1, ${Math.random() * 360}deg)`
     // this.el.style.transform = `rotate(${Math.random() * 360}deg)`
-    this.rotation += 10 // this depends on fps!
+    this.rotation += 15 // this depends on fps!
     this.el.style.transform = `rotate3d(0, 0, 1, ${this.rotation}deg)`
     // this.el.style.transform = `rotate(${this.rotation}deg)`
   }
