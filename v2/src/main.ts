@@ -6,13 +6,13 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <button id="btnStart">Start</button>
   <button id="btnStop">Stop</button>
   <div id="stats" style="display: inline;"></div>
-  <div id="matrix" style="margin-top: 8px; width: 400px;"></div>
+  <div id="matrix" style="margin-top: 8px; width: 800px;"></div>
 </div>
 `
 
 const matrix = new SimpleMatrix(
-  document.querySelector<HTMLDivElement>('#matrix')!, 5000,
-  { maxFps: 10 }
+  document.querySelector<HTMLDivElement>('#matrix')!, 200,
+  { maxFps: 60 }
 )
 
 const statsEl = document.querySelector<HTMLDivElement>("#stats")!

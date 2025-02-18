@@ -15,12 +15,17 @@ export class SimpleMatrix {
   private symbols: SimpleSymbol[] = []
 
   private isRunning: boolean = false
-  private renderStartTime: number = performance.now()
 
   constructor(parentEl: HTMLDivElement, count: number, options: SimpleMatrixOptions = {}) {
+    // process arguments:
     this.parentEl = parentEl
     this.options = options
 
+    // rendering settings:
+    this.maxFps = this.options.maxFps || 60
+    this.minFrameTime = 1000 / this.maxFps
+
+    // set up element and shadow dom:
     this.el = document.createElement("div")
     this.shadowRoot = this.el.attachShadow({ mode:'open' })
     this.setup(count)
@@ -44,9 +49,9 @@ export class SimpleMatrix {
   }
 
   // rendering mechanics:
-  private maxFps: number = 30
+  private maxFps: number
   private previousStartTime: number = performance.now()
-  private minFrameTime: number = 1000 / this.maxFps
+  private minFrameTime: number
   private currentFrameDuration: number = 1 // time since the previously rendered frame
 
   // statistics:
@@ -76,14 +81,12 @@ export class SimpleMatrix {
   }
 
   public start(): void {
-    console.log('START!')
     this.isRunning = true
 
     this.render()
   }
 
   public stop(): void {
-    console.log('STOP!')
     this.isRunning = false
     this.currentFrameDuration = 1
   }
