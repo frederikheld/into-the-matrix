@@ -1,17 +1,22 @@
 import { SimpleSymbol } from "./SimpleSymbol"
 
 export class SimpleMatrix {
-  private el: HTMLDivElement
   private parentEl: HTMLDivElement
+  private el: HTMLDivElement
+  private shadowRoot: ShadowRoot
 
   private symbols: SimpleSymbol[] = []
+
+  private isRunning: boolean = false
 
   constructor(parentEl: HTMLDivElement) {
     this.parentEl = parentEl
 
-    this.el = this.setup(10)
+    this.el = document.createElement("div")
+    this.shadowRoot = this.el.attachShadow({mode:'open'})
+    this.shadowRoot.appendChild(this.setup(10))
 
-    this.parentEl.appendChild(this.el)
+    this.parentEl.appendChild(this.shadowRoot)
   }
 
   private setup (length: number): HTMLDivElement {
@@ -24,11 +29,25 @@ export class SimpleMatrix {
     return el
   }
 
+  public render() {
+    this.symbols.forEach((symbol)=> symbol.render())
+
+    if (this.isRunning) {
+      setTimeout(() => {
+        this.render()
+      }, 100)
+    }
+  }
+
   public start(): void {
     console.log('START!')
+    this.isRunning = true
+
+    this.render()
   }
 
   public stop(): void {
     console.log('STOP!')
+    this.isRunning = false
   }
 }
