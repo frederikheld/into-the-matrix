@@ -1,5 +1,3 @@
-// import { convertToCssString } from './utils'
-
 export interface Symbol {
     el: HTMLDivElement,
     render: Function
@@ -31,16 +29,6 @@ function setup(index: number): HTMLDivElement {
 
     el.style.willChange = 'transform'
     el.style.transform = `rotate3d(0, 0, 1, ${index}deg)`
-
-    // el.setAttribute('style', convertToCssString({
-    //     all: 'unset',
-    //     width: '16px',
-    //     height: '16px',
-    //     'border-radius': '50%',
-    //     background: 'conic-gradient(from 0deg, red 0deg, red 30deg, blue 30deg, blue 360deg)',
-    //     transform: `rotate3d(0, 0, 1, ${index}deg)`,
-    //     'will-change': 'transform'
-    // }))
 
     return el
 }

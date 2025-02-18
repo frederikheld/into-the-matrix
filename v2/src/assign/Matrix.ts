@@ -1,4 +1,3 @@
-// import { convertToCssString } from './utils'
 import { createSymbol, type Symbol } from './Symbol'
 
 export const createMatrix = (parentEl: HTMLDivElement, length: number) => {
@@ -39,12 +38,6 @@ function setup(length: number, symbols: Set<Symbol>): HTMLDivElement {
     const el = document.createElement('div')
 
     el.classList.add('matrix')
-
-    // el.setAttribute('style', convertToCssString({
-    //   display: 'flex',
-    //   'flex-direction': 'row',
-    //   'flex-wrap': 'wrap'
-    // }))
 
     new Array(length).fill(0).forEach((_, index) => {
       symbols.add(createSymbol(el, index))
