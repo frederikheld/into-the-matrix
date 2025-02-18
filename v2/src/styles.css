@@ -1,0 +1,11 @@
+.trickle {
+  display: block;
+  line-height: 0px;
+  height: 4px;
+}
+
+.symbol {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+}

@@ -12,7 +12,7 @@ export class SimpleMatrix {
 
   private options: SimpleMatrixOptions = {}
 
-  private symbols: SimpleSymbol[] = []
+  private symbols: Set<SimpleSymbol> = new Set()
 
   private isRunning: boolean = false
 
@@ -48,7 +48,7 @@ export class SimpleMatrix {
     }))
 
     new Array(length).fill(0).forEach((_, index) => {
-      this.symbols.push(new SimpleSymbol(matrixEl, index))
+      this.symbols.add(new SimpleSymbol(matrixEl, index))
     })
 
     return matrixEl
