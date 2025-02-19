@@ -1,12 +1,12 @@
-import './css/styles.css'
+import './css/main.css'
 import { createMatrix } from './Matrix'
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 <div>
-  <div>
+  <div style="vertical-align: baseline">
     <button id="btnStart">Start</button>
     <button id="btnStop">Stop</button>
-    <div id="stats" style="display: inline; margin-left: 4px;"></div>
+    <div id="stats" class="stats"></div>
   </div>
   <div id="matrix" style="margin-top: 8px; width: 1236px;"></div>
 </div>
@@ -19,7 +19,7 @@ const matrix = createMatrix(
     // 1,
     {
       // maxFps: 60,
-      maxFps: 1
+      // maxFps: 1
     }
 )
 
