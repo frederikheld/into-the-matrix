@@ -20,7 +20,7 @@ const matrix = createMatrix(
   {
     // maxFps: 60,
     // maxFps: 1
-  },
+  }
 )
 
 const statsEl = document.querySelector<HTMLDivElement>('#stats')!

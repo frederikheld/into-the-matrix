@@ -61,7 +61,7 @@ export const createMatrix = (parentEl: HTMLDivElement, length: number, options: 
       fps: previousFrameTime > 0 ? 1000 / previousFrameTime : 0,
       frameTime: previousFrameTime,
       averageFrameTime,
-      averageFps: averageFrameTime > 0 ? 1000 / averageFrameTime : 0,
+      averageFps: averageFrameTime > 0 ? 1000 / averageFrameTime : 0
     }
   }
 
@@ -81,7 +81,7 @@ export const createMatrix = (parentEl: HTMLDivElement, length: number, options: 
     render,
     start,
     stop,
-    getStats,
+    getStats
   }
 }
 

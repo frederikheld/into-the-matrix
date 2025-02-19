@@ -42,7 +42,7 @@ export const createSymbol = (parentEl: HTMLDivElement, index: number): Symbol =>
 
   return {
     el,
-    render,
+    render
   }
 }
 
