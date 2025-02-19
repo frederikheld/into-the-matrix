@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Enter the Matrix</title>
+
+    <script src="../dist/bundle.js"></script>
+
+</head>
+<body>
+    <div id="container"></div>
+    <!-- <div id="container" style="width: 200px; height: 100px;"></div> -->
+
+    <div id="footer">
+        <div id="hoover-area"></div>
+        <div id="content">
+            <div id="stats"></div>
+            <div id="controls">
+                <button id="button-start">Start</button>
+                <button id="button-stop">Stop</button>
+                <button id="button-next">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const cadence = 16.67
+
+        const options = {
+            newTrickleProbability: 0.1,
+            changeSymbolProbability: 0.05,
+            symbolSize: 24,
+            // renderMode: 'set-interval',
+            renderMode: 'request-animation-frame',
+            // debug: true
+            debug: false
+        }
+
+        const container = document.getElementById('container')
+        const mc = new Matrix(container, options)
+
+        // window.addEventListener('load', () => {
+        //     mc.run(cadence, document.getElementById('stats'))
+        // })
+
+        document.getElementById('button-start').addEventListener('click', () => {
+            mc.run(cadence, document.getElementById('stats'))
+        })
+
+        document.getElementById('button-stop').addEventListener('click', () => {
+            mc.stop()
+        })
+
+        document.getElementById('button-next').addEventListener('click', () => {
+            mc.render()
+        })
+
+        window.addEventListener('resize', () => {
+            mc.resize()
+        })
+    </script>
+</body>
+</html>
