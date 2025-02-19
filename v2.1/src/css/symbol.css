@@ -1,24 +1,23 @@
 .symbol {
-    all: unset;
-    
-    /* layout */
-    display: block;
-    width: 16px;
-    height: 16px;
-    overflow: hidden;
+  all: unset;
 
-    /* text */
-    font-family: monospace;
-    font-size: 16px;
-    line-height: 16px;
-    text-align: center;
+  /* layout */
+  display: block;
+  width: 16px;
+  height: 16px;
+  overflow: hidden;
 
-    /* effects */
-    color: rgba(42, 255, 42);
-    text-shadow: 0 0 calc(16px / 4) rgba(42, 255, 42);
+  /* text */
+  font-family: monospace;
+  font-size: 16px;
+  line-height: 16px;
+  text-align: center;
+
+  /* effects */
+  color: rgba(42, 255, 42);
+  text-shadow: 0 0 calc(16px / 4) rgba(42, 255, 42);
 }
 
 .leading-symbol {
-    color: white;
+  color: white;
 }
-

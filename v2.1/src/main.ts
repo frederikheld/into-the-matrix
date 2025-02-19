@@ -13,21 +13,25 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 `
 
 const matrix = createMatrix(
-    document.querySelector<HTMLDivElement>('#matrix')!,
-    5000,
-    // 100,
-    // 1,
-    {
-      // maxFps: 60,
-      // maxFps: 1
-    }
+  document.querySelector<HTMLDivElement>('#matrix')!,
+  5000,
+  // 100,
+  // 1,
+  {
+    // maxFps: 60,
+    // maxFps: 1
+  },
 )
 
-const statsEl = document.querySelector<HTMLDivElement>("#stats")!
+const statsEl = document.querySelector<HTMLDivElement>('#stats')!
 setInterval(() => {
   const stats = matrix.getStats()
   statsEl.innerHTML = `frame time: ${Math.ceil(stats.averageFrameTime)} / ${Math.ceil(stats.minFrameTime)} ms | fps: ${Math.ceil(stats.averageFps)} / ${Math.ceil(stats.maxFps)} | nodes: ${stats.symbolCount}`
 }, 100)
 
-document.querySelector<HTMLButtonElement>('#btnStart')!.addEventListener('click', () => matrix.start())
-document.querySelector<HTMLButtonElement>('#btnStop')!.addEventListener('click', () => matrix.stop())
+document
+  .querySelector<HTMLButtonElement>('#btnStart')!
+  .addEventListener('click', () => matrix.start())
+document
+  .querySelector<HTMLButtonElement>('#btnStop')!
+  .addEventListener('click', () => matrix.stop())
