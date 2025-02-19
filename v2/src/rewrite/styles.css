@@ -1,0 +1,76 @@
+.matrix {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+/* .symbol { */
+    /* will-change: contents; */
+    /* background-image: url(img/sprite-24.jpg);
+    background-size: cover; */
+    /* background-size: contain;
+    background-image: var(--background-image); */
+    /* border: 1px solid grey; */
+/* } */
+
+/* START straightforward innerText approach */
+.symbol {
+    all: unset;
+    display: block;
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+    line-height: 16px;
+    text-align: center;
+    overflow: hidden;
+}
+/* END */
+
+/* START ::before data-content approach */
+/* .symbol::before {
+    content: attr(data-content);
+}
+
+.symbol {
+    all: unset;
+    display: block;
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+    line-height: 16px;
+    text-align: center;
+    overflow: hidden;
+} */
+/* END */
+
+
+/* START::before sprite approach */
+
+/* .symbol {
+    all: unset;
+    display: block;
+    width: 16px;
+    height: 16px;
+    overflow: hidden;
+}
+
+.symbol::before {
+    content: " ";
+    display: block;
+    background-image: url(img/sprite-24.jpg);
+    background-size: cover;
+    width: 768px;
+    height: 16px;
+    transform: translateX(var(--bg-transform));
+} */
+/* `width: 768px` is allChars.length * 16px. TODO: set via data-attr! */
+/* END */
+
+
+.bg-red {
+    background-color: red;
+}
+
+.bg-blue {
+    background-color: blue;
+}
