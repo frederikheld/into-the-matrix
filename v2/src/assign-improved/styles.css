@@ -1,0 +1,29 @@
+.matrix {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.symbol {
+    all: unset;
+    display: block;
+    width: 12px;
+    height: 12px;
+    font-size: 12px;
+    border-radius: 50%;
+    will-change: contents;
+    /* background-color: red; */
+}
+
+.symbol::before {
+    /* content: "X"; */
+    content: attr(data-content)
+}
+
+.bg-red {
+    background-color: red;
+}
+
+.bg-blue {
+    background-color: blue;
+}
