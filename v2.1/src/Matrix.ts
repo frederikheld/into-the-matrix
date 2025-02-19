@@ -96,7 +96,7 @@ export const createMatrix = (parentEl: HTMLDivElement, length: number, options: 
  * @param item
  * @param length
  */
-function addToStack(stack: any[], item: any, length: number) {
+function addToStack(stack: unknown[], item: unknown, length: number) {
   if (stack.length < length) {
     stack.push(item)
   } else {

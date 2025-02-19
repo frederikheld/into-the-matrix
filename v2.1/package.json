@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint .",
+    "lint": "eslint . --fix",
     "format": "prettier --write src/"
   },
   "author": "Frederik S. Held",

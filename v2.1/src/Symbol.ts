@@ -1,6 +1,6 @@
 export interface Symbol {
   el: HTMLDivElement
-  render: Function
+  render: () => void
 }
 
 const allChars: string[] = [
