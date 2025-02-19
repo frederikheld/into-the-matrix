@@ -1,0 +1,17 @@
+{
+  "name": "into-the-matrix",
+  "version": "2.0.0",
+  "description": "Web implementation of the famous matrix effect.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "author": "Frederik S. Held",
+  "license": "GPL-3.0-or-later",
+  "devDependencies": {
+    "typescript": "~5.7.3",
+    "vite": "^6.1.0"
+  }
+}
