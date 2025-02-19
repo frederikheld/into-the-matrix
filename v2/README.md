@@ -49,6 +49,8 @@ It is okay if page load is slow, if this makes rendering faster at runtime. E.g.
 
 > Note: it doesn't seem to make a different in performance if using `Math.random()` at runtime or iterating through a pre-randomized array. The latter feels more like random noise though, but I actually prefer the pseudo-random look of `Math.random()`.
 
+I tried to use FastDom to queue layout recalculactions but it did not improve anything.
+
 ### More ways to improve performance
 
 * using `Set` instead of `Array`
@@ -85,3 +87,4 @@ It is okay if page load is slow, if this makes rendering faster at runtime. E.g.
 
 * [Shadow DOM vs. Virtual DOM](https://medium.com/duomly-blockchain-online-courses/shadow-dom-vs-virtual-dom-what-is-the-difference-f2611da536ab)
 * [Operations that cause Layout Thrashing](https://gist.github.com/paulirish/5d52fb081b3570c81e3a)
+* A solution to Layout Thrashing: [FastDom](https://github.com/wilsonpage/fastdom); how FastDom relates to `requestAnimationFrame()`: [Preventing 'layout thrashing'](https://sking7.github.io/articles/449317090.html) by the author of FastDom.

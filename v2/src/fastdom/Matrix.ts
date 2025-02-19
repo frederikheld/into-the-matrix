@@ -16,7 +16,6 @@ export const createMatrix = (parentEl: HTMLDivElement, length: number, options: 
     let currentFrameDuration: number = 1 // time since the previously rendered frame
 
     // statistics:
-    let frame = 0
     let previousFrameTime: number = 0 // length of the previously rendered frame
     const previousFrameTimes: number[] = [] // a list of previous frame times
 
@@ -37,7 +36,6 @@ export const createMatrix = (parentEl: HTMLDivElement, length: number, options: 
         }
 
         if (isRunning) {
-            frame++
             requestAnimationFrame(render)
         }
     }
