@@ -3,21 +3,26 @@
 
   /* layout */
   display: block;
-  width: 16px;
-  height: 16px;
   overflow: hidden;
+  position: absolute;
 
   /* text */
   font-family: monospace;
-  font-size: 16px;
-  line-height: 16px;
   text-align: center;
 
   /* effects */
   color: rgba(42, 255, 42);
   text-shadow: 0 0 calc(16px / 4) rgba(42, 255, 42);
+  filter: opacity(1);
 }
 
-.leading-symbol {
-  color: white;
+.symbol.fade-out {
+  filter: opacity(0);
+  transition-property: filter;
+  transition-timing-function: linear;
+  /* transition-duration is being set programmatically */
+}
+
+.symbol.leading {
+  color: white !important;
 }

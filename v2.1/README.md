@@ -4,9 +4,9 @@ Rewrite of the initial implementation in TypeScript.
 
 ## Goals
 
-* Fix performance issue caused by the rendering approach
-* Rewrite in TypeScript
-* Better documentation for classes and functions
+- Fix performance issue caused by the rendering approach
+- Rewrite in TypeScript
+- Better documentation for classes and functions
 
 > The main challenge of this project is performance: how can hundrets or thousands of elements rendered and updated fluidly?
 
@@ -36,8 +36,8 @@ Putting all images on a sprite and moving the `::before` element via `transform:
 
 If you run the comparison, make sure that
 
-* all symbols are inside the viewport! Browsers might not render off-screen elements.
-* you close the developer console! It adds a considerable performance penalty.
+- all symbols are inside the viewport! Browsers might not render off-screen elements.
+- you close the developer console! It adds a considerable performance penalty.
 
 ## Tech & Concepts
 
@@ -53,38 +53,46 @@ I tried to use FastDom to queue layout recalculactions but it did not improve an
 
 ### More ways to improve performance
 
-* using `Set` instead of `Array`
-* using class-less instead of class-based oop style (see above)
-* changing as little CSS values as possible in each render cycle
-* using CSS properties that get rendered by the GPU (e.g. `transform`)
-* implement a frame limiter to even out frame times (I'm not sure how much this acutally helps and the bigger struggle is to reach a decent frame time in the first place)
-* when changing the `background-color` of a Symbol, it is faster to change it via `el.style.backgroundColor` (~9 fps) than via removing and adding classes that style the element (~6 fps).
-* changing `innerText` to a random char is about 2 frames faster than doing `transform: rotate`, althoug it is not being rendered on the GPU.
-* using the `attr` approach to change the text gets us up to 10 fps on average, but with varying fps. This is the fastest approach yet.
+- using `Set` instead of `Array`
+- using class-less instead of class-based oop style (see above)
+- changing as little CSS values as possible in each render cycle
+- using CSS properties that get rendered by the GPU (e.g. `transform`)
+- implement a frame limiter to even out frame times (I'm not sure how much this acutally helps and the bigger struggle is to reach a decent frame time in the first place)
+- when changing the `background-color` of a Symbol, it is faster to change it via `el.style.backgroundColor` (~9 fps) than via removing and adding classes that style the element (~6 fps).
+- changing `innerText` to a random char is about 2 frames faster than doing `transform: rotate`, althoug it is not being rendered on the GPU.
+- using the `attr` approach to change the text gets us up to 10 fps on average, but with varying fps. This is the fastest approach yet.
 
-    > **JavaScript:**
-    > ```js
-    > // el has class `symbol`
-    > el.setAttribute('data-content', getRandomChar(chars))
-    > ```
+  > **JavaScript:**
+  >
+  > ```js
+  > // el has class `symbol`
+  > el.setAttribute('data-content', getRandomChar(chars))
+  > ```
 
-    > **CSS:**
-    > ```css
-    > .symbol::before {
-    >   content: attr(data-content);
-    > }
-    > ```
+  > **CSS:**
+  >
+  > ```css
+  > .symbol::before {
+  >   content: attr(data-content);
+  > }
+  > ```
 
-    Note that text that is being added like this can't be selected with the mouse, which might be a benefit for this project (could be done with `user-select: none;` otherwise).
+  Note that text that is being added like this can't be selected with the mouse, which might be a benefit for this project (could be done with `user-select: none;` otherwise).
 
 ### Things that don't improve performance
 
-* it doesn't make a difference if I use a `conic-gradient` as background image for the Symbols or a exernal image loaded via `url`
-* setting `visibility: hidden`, then rendering all Symbols, then setting `visibility: visible` to the Matrix might slightly improve performance, but I'm not actually sure. The same goes for `display: none` and `opacity: 0`.
-* changing `background-image` instead of rendering a char as content is way slower.
+- it doesn't make a difference if I use a `conic-gradient` as background image for the Symbols or a exernal image loaded via `url`
+- setting `visibility: hidden`, then rendering all Symbols, then setting `visibility: visible` to the Matrix might slightly improve performance, but I'm not actually sure. The same goes for `display: none` and `opacity: 0`.
+- changing `background-image` instead of rendering a char as content is way slower.
 
-### Literature
+### Literature on Performance
 
-* [Shadow DOM vs. Virtual DOM](https://medium.com/duomly-blockchain-online-courses/shadow-dom-vs-virtual-dom-what-is-the-difference-f2611da536ab)
-* [Operations that cause Layout Thrashing](https://gist.github.com/paulirish/5d52fb081b3570c81e3a)
-* A solution to Layout Thrashing: [FastDom](https://github.com/wilsonpage/fastdom); how FastDom relates to `requestAnimationFrame()`: [Preventing 'layout thrashing'](https://sking7.github.io/articles/449317090.html) by the author of FastDom.
+- [Shadow DOM vs. Virtual DOM](https://medium.com/duomly-blockchain-online-courses/shadow-dom-vs-virtual-dom-what-is-the-difference-f2611da536ab)
+- [Operations that cause Layout Thrashing](https://gist.github.com/paulirish/5d52fb081b3570c81e3a)
+- A solution to Layout Thrashing: [FastDom](https://github.com/wilsonpage/fastdom); how FastDom relates to `requestAnimationFrame()`: [Preventing 'layout thrashing'](https://sking7.github.io/articles/449317090.html) by the author of FastDom.
+
+## Implementation Principles
+
+- put all styles that don't change at runtime in the respective css file
+- if the style depends on a runtime value, set it in the respective `setup()` function
+- if you want to change multiple styles at once at runtime, use a class. Classes only trigger a redraw once, not for every style that is being changed.

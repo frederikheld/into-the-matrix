@@ -1,108 +1,115 @@
-html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
 
 #container {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    background-color: black;
-    overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  overflow: hidden;
 }
 
 .matrix {
-    width: 100%;
-    height: 100%;
-    display: block;
-    position: relative;
-    left: 0;
-    top: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: relative;
+  left: 0;
+  top: 0;
 }
 
 .symbol {
-    color: rgba(42, 255, 42);
-    /* text-shadow: 0 0 4px rgb(42, 255, 42), 0 0 8px rgb(42, 255, 42); */
-    /* text-shadow is being set in Symbol.render() now to be able to adapt it to options.symbolSize */
+  color: rgba(42, 255, 42);
+  /* text-shadow: 0 0 4px rgb(42, 255, 42), 0 0 8px rgb(42, 255, 42); */
+  /* text-shadow is being set in Symbol.render() now to be able to adapt it to options.symbolSize */
 
-    display: block;
-    position: relative;
+  display: block;
+  position: absolute;
 
-    font-family: monospace;
-    text-align: center;
-    
-    /* defaults. Will be set in Symbol.constructor() according to options.fontSize */
-    font-size: 0.8em;
-    height: 16px;
-    line-height: 16px;
-    width: 16px;
+  font-family: monospace;
+  text-align: center;
 
-    margin: -0.3rem 0;
+  /* defaults. Will be set in Symbol.constructor() according to options.fontSize */
+  font-size: 0.8em;
+  height: 16px;
+  line-height: 16px;
+  width: 16px;
 
-    /* will-change: opacity; */
-    /* `will-change` drives the overall performance down by magnitudes in this case!
+  margin: -0.3rem 0;
+
+  /* will-change: opacity; */
+  /* `will-change` drives the overall performance down by magnitudes in this case!
      * Render time as measuread by Matrix will go down, but so do the FPS because
      * layer creation triggered by `will-change` apparently adds lots of overhead.
      * see explanation here: https://web.dev/animations-guide/#force
      * see docs here: https://developer.mozilla.org/en-US/docs/Web/CSS/will-change
      */
+
+  filter: opacity(1);
+  transition: filter 3s linear;
 }
 
-.new-symbol {
-    color: rgb(255, 255, 255) !important;
+.symbol.fade-out {
+  filter: opacity(0);
+  transition: filter 3s linear;
 }
 
+.symbol.new-symbol {
+  color: rgb(255, 255, 255) !important;
+}
 
 /* DEBUG MODE */
 
 .debug .symbol {
-    border: 1px solid red;
+  border: 1px solid red;
 }
-
 
 /* FOOTER */
 
 #footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    box-sizing: border-box;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
 
-    /* margin-bottom: -38px; */
-    transition-duration: 0.2s;
+  /* margin-bottom: -38px; */
+  transition-duration: 0.2s;
 }
 
 #hoover-area {
-    /* 
+  /* 
      * creates an invisible area that
      * will reveal the footer on hover.
      */
-    height: 8px;
-    width: 100%;
-    background:rgba(255, 0, 0, 0.0);
+  height: 8px;
+  width: 100%;
+  background: rgba(255, 0, 0, 0);
 }
 
 #content {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    
-    padding: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 
+  padding: 0.5rem;
 }
 
 #footer:hover {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 #stats {
-    font-size: 0.8rem;
-    vertical-align: baseline;
-    color: #000;
-    background-color: rgba(255, 255, 255, 0.5);
-    /* background-color: rgba(128, 128, 128, 0.5); */
-    padding: 4px;
+  font-size: 0.8rem;
+  vertical-align: baseline;
+  color: #000;
+  background-color: rgba(255, 255, 255, 0.5);
+  /* background-color: rgba(128, 128, 128, 0.5); */
+  padding: 4px;
 }
 
-#controls { }
+#controls {
+}

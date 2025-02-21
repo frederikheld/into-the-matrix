@@ -1,0 +1,14 @@
+#ui-container {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  box-sizing: border-box;
+  vertical-align: baseline;
+  padding: 4px;
+}
+
+.stats {
+  color: white;
+  display: inline;
+  margin-right: 4px;
+}

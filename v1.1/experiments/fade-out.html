@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Enter the Matrix</title>
+
+    <style>
+      #element {
+        width: 200px;
+        height: 200px;
+        filter: opacity(1);
+        background-color: rebeccapurple;
+
+        font-size: 24px;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #element.fade-out {
+        filter: opacity(0);
+        transition: filter 5s linear;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content">
+      <div id="element"></div>
+      <div id="controls">
+        <button id="button-start">Start</button>
+        <button id="button-reset">Reset</button>
+      </div>
+    </div>
+
+    <script>
+      const el = document.querySelector("#element");
+      const btnStart = document.querySelector("#button-start");
+      const btnReset = document.querySelector("#button-reset");
+
+      btnStart.addEventListener("click", () => animate(el));
+
+      btnReset.addEventListener("click", () => reset(el));
+
+      let interval;
+
+      function setup(el) {
+        el.innerText = getRandomChar();
+      }
+
+      function animate(el) {
+        el.classList.add("fade-out");
+
+        interval = setInterval(() => {
+          if (Math.random() > 0.5) {
+            el.innerText = getRandomChar();
+          }
+        }, 100);
+
+        setTimeout(() => {
+          stop(el);
+        }, 5000);
+      }
+
+      function stop(el) {
+        clearInterval(interval);
+      }
+
+      function reset(el) {
+        el.classList.remove("fade-out");
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        setup(el);
+        // animate(el);
+      });
+
+      function getRandomChar() {
+        const chars = ["a", "b", "c"];
+
+        return chars[Math.floor(Math.random() * chars.length)];
+      }
+    </script>
+  </body>
+</html>
