@@ -1,0 +1,27 @@
+#ui-container {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: end;
+
+  width: 100%;
+  bottom: 0px;
+  right: 0px;
+
+  text-align: right;
+  padding: 8px;
+  vertical-align: baseline;
+
+  box-sizing: border-box;
+
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+#stats {
+  margin-right: 4px;
+}
+
+button {
+  margin-left: 4px;
+}
