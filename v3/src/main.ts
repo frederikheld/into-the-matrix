@@ -14,11 +14,12 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 `
 
 const matrix = new Matrix(document.querySelector('#matrix-container')!, {
-  maxFps: 10,
+  // maxFps: 1,
+  maxFps: 20,
   newTrickleProbability: 0.1,
   changeSymbolProbability: 0.05,
   symbolSize: 24,
-  fadeOutDuration: 3
+  fadeOutDuration: 12
 })
 
 const statsEl = document.querySelector<HTMLDivElement>('#stats')!

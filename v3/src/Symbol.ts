@@ -24,7 +24,7 @@ export class Symbol {
   private height: number = 0
 
   private renderCycle: number = 0
-  private currentSymbol: string = ' '
+  private currentSymbol: string
 
   constructor(
     canvas: HTMLCanvasElement,
@@ -45,6 +45,8 @@ export class Symbol {
     this.width = this.options.symbolSize
     this.height = this.options.symbolSize
 
+    this.currentSymbol = getRandomChar(this.characters)
+
     this.resize()
   }
 
@@ -60,19 +62,17 @@ export class Symbol {
   }
 
   public render(): void {
+    const opacity = 1.0 - this.renderCycle / this.options.fadeOutDuration
+
     if (this.renderCycle > 0) {
-      this.ctx.fillStyle = 'rgba(42, 255, 42, 1)'
+      this.ctx.fillStyle = `rgba(42, 255, 42, ${opacity})`
     } else {
-      this.ctx.fillStyle = 'rgba(255, 255, 255, 1)'
+      this.ctx.fillStyle = `rgba(255, 255, 255, 1.0)`
     }
 
     if (Math.random() < this.options.changeSymbolProbability) {
       this.currentSymbol = getRandomChar(this.characters)
     }
-
-    // this.ctx.strokeStyle = ' green'
-    // this.ctx.strokeRect(this.posX, this.posY, this.width, this.height)
-    // console.log(`symbol:`, this.posX, this.posY, this.width, this.height)
 
     this.ctx.fillText(
       this.currentSymbol,
@@ -82,6 +82,10 @@ export class Symbol {
     )
 
     this.renderCycle++
+  }
+
+  public isFadedOut(): boolean {
+    return 1.0 - this.renderCycle / this.options.fadeOutDuration <= 0
   }
 }
 

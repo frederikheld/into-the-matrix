@@ -74,21 +74,6 @@ export class Matrix {
     this.canvas.style.width = `${Math.round(this.renderDimensions.scale * this.canvas.width)}px`
     this.canvas.style.height = `${Math.round(this.renderDimensions.scale * this.canvas.height)}px`
 
-    if (this.renderDimensions.columnCount < this.trickles.length) {
-      // remove trickles it too many:
-      this.trickles.length = this.renderDimensions.columnCount
-      // TODO: make sure that the object isn't referenced elsewhere,
-      //       otherwise we have a memory leak here!
-    } else if (this.renderDimensions.columnCount > this.trickles.length) {
-      // add trickles if too little:
-      const currentCount = this.trickles.length
-      new Array(this.renderDimensions.columnCount - this.trickles.length)
-        .fill(0)
-        .forEach((_, columnIndex) => {
-          this.trickles.push(new Trickle(this.canvas, columnIndex + currentCount, this.options))
-        })
-    }
-
     this.trickles.forEach((trickle) => trickle.resize(this.renderDimensions))
 
     this.render()
@@ -105,12 +90,21 @@ export class Matrix {
       // for rendering mechanics:
       this.previousStartTime = frameTime
 
+      // remove faded out trickles:
+      this.trickles = this.trickles.filter((trickle) => trickle.getSymbolsLength() > 0)
+
+      console.log('# of trickles:', this.trickles.length)
+
+      // add new trickles:
+      new Array(this.renderDimensions.columnCount).fill(0).forEach((_, index) => {
+        if (Math.random() < this.options.newTrickleProbability) {
+          this.trickles.push(new Trickle(this.canvas, index, this.options))
+        }
+      })
+
       // this.ctx.clearRect(0, 0, this.width, this.height)
       this.ctx.fillStyle = '#000'
       this.ctx.fillRect(0, 0, this.width, this.height)
-
-      // this.ctx.fillStyle = 'rebeccapurple'
-      // this.ctx.fillRect(0 + 24, 0 + 24, this.width - 48, this.height - 48)
 
       this.trickles.forEach((trickle) => {
         trickle.render()

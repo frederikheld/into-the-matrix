@@ -21,6 +21,7 @@ export class Trickle {
   private height: number = 0
 
   private rowsCount: number = 0
+  private currentRow: number = 1
 
   constructor(canvas: HTMLCanvasElement, columnIndex: number, options: MatrixOptions) {
     this.canvas = canvas
@@ -43,24 +44,32 @@ export class Trickle {
       this.renderDimensions = renderDimensions
     }
 
-    new Array(this.renderDimensions.rowsCount).fill(0).forEach((_, rowIndex) => {
-      this.symbols.push(new Symbol(this.canvas, this.columnIndex, rowIndex, this.options))
-    })
-
     this.symbols.forEach((symbol) => {
       symbol.resize(this.renderDimensions)
     })
   }
 
   public render(): void {
-    // this.ctx.fillStyle = 'rgba(255, 0, 0, 0.4)'
-    // this.ctx.fillRect(this.posX, this.posY, this.width, this.height)
+    // Remove all symbols that have faded out:
+    this.symbols = this.symbols.filter((symbol) => !symbol.isFadedOut())
 
-    // this.ctx.strokeStyle = 'rgba(255, 0, 0, 1)'
-    // this.ctx.strokeRect(this.posX, this.posY, this.width, this.height)
+    // If not out of bounds, drop new symbol at current position:
+    if (this.currentRow * this.options.symbolSize < this.height) {
+      this.symbols.push(new Symbol(this.canvas, this.columnIndex, this.currentRow, this.options))
+    }
 
     this.symbols.forEach((symbol) => {
       symbol.render()
     })
+
+    this.currentRow++
+  }
+
+  public getCurrentRow(): number {
+    return this.currentRow
+  }
+
+  public getSymbolsLength(): number {
+    return this.symbols.length
   }
 }
